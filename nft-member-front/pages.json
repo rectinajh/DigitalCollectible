@@ -1,0 +1,375 @@
+{
+	"easycom": {
+		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+	},
+	// "condition": { //模式配置，仅开发期间生效
+	// 	"current": 0, //当前激活的模式(list 的索引项)
+	// 	"list": [{
+	// 		"name": "test", //模式名称
+	// 		"path": "pages/componentsC/test/index", //启动页面，必选
+	// 		"query": "uuid=c4bba940-f69e-11ea-a419-6bafda9d095e&__id__=1" //启动参数，在页面的onLoad函数里面得到
+	// 	}]
+	// },
+	"pages": [{
+			"path": "pages/home/home",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": true,
+				"h5": {
+					"titleNView": false
+				},
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "登录",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/modifyPayPwd/modifyPayPwd",
+			"style": {
+				"navigationBarTitleText": "交易设置",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/loginRecord/loginRecord",
+			"style": {
+				"navigationBarTitleText": "登录记录",
+				"enablePullDownRefresh": true
+			}
+
+		}, {
+			"path": "pages/balanceChangeLog/balanceChangeLog",
+			"style": {
+				"navigationBarTitleText": "我的钱包",
+				"enablePullDownRefresh": true
+			}
+
+		}, {
+			"path": "pages/notice/notice",
+			"style": {
+				"navigationBarTitleText": "通知公告",
+				"enablePullDownRefresh": true
+			}
+		}, {
+			"path": "pages/noticeDetail/noticeDetail",
+			"style": {
+				"navigationBarTitleText": "详情",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/bindRealName/bindRealName",
+			"style": {
+				"navigationBarTitleText": "实名认证",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/latestCollectionDetail/latestCollectionDetail",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/holdCollectionDetail/holdCollectionDetail",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/setting/setting",
+			"style": {
+				"navigationBarTitleText": "设置",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/my/my",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": true,
+				"h5": {
+					"titleNView": false
+				},
+				"app-plus": {
+					"titleNView": false
+				}
+			}
+
+		}, {
+			"path": "pages/resaleCollectionDetail/resaleCollectionDetail",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/market/market",
+			"style": {
+				"navigationBarTitleText": "市场",
+				"enablePullDownRefresh": true
+			}
+
+		}, {
+			"path": "pages/myResaleCollectionDetail/myResaleCollectionDetail",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/myGiveRecord/myGiveRecord",
+			"style": {
+				"navigationBarTitleText": "转赠记录",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/payOrder/payOrder",
+			"style": {
+				"navigationBarTitleText": "我的订单",
+				"enablePullDownRefresh": true
+			}
+
+		}, {
+			"path": "pages/payOrderDetail/payOrderDetail",
+			"style": {
+				"navigationBarTitleText": "订单详情",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/issuedCollectionActionLog/issuedCollectionActionLog",
+			"style": {
+				"navigationBarTitleText": "流转记录",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/collectionGive/collectionGive",
+			"style": {
+				"navigationBarTitleText": "转赠好友",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/collectionResale/collectionResale",
+			"style": {
+				"navigationBarTitleText": "寄售藏品",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/composeActivity/composeActivity",
+			"style": {
+				"navigationBarTitleText": "合成活动",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/composeCollection/composeCollection",
+			"style": {
+				"navigationBarTitleText": "合成藏品",
+				"enablePullDownRefresh": false,
+				"h5": {
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/font.ttf",
+							"text": "\ue625",
+							"fontSize": "16px",
+							"width": "auto"
+						}]
+					}
+				},
+				"app-plus": {
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/font.ttf",
+							"text": "\ue625",
+							"fontSize": "16px",
+							"width": "auto"
+						}]
+					}
+				}
+			}
+
+		}, {
+			"path": "pages/msg/msg",
+			"style": {
+				"navigationBarTitleText": "消息",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/invite/invite",
+			"style": {
+				"navigationBarTitleText": "邀请好友",
+				"enablePullDownRefresh": false,
+				"h5": {
+					"titleNView": {
+						"buttons": [{
+							"text": "邀请记录",
+							"fontSize": "14px",
+							"width": "auto",
+							"color": "#ff9900",
+							"fontWeight": "bold"
+						}]
+					}
+				},
+				"app-plus": {
+					"titleNView": {
+						"buttons": [{
+							"text": "邀请记录",
+							"fontSize": "14px",
+							"width": "auto",
+							"color": "#ff9900",
+							"fontWeight": "bold"
+						}]
+					}
+				}
+			}
+
+		}
+	    ,{
+            "path" : "pages/inviteRecord/inviteRecord",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "邀请记录",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/customerService/customerService",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "联系客服",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/exchangeCode/exchangeCode",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "空投兑换",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/settlementAccount/settlementAccount",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "结算账户",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/addSettlementAccount/addSettlementAccount",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/withdraw/withdraw",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "提现",
+                "enablePullDownRefresh": false,
+				"h5": {
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/font.ttf",
+							"text": "\ue68f 提现记录",
+							"fontSize": "13px",
+							"width": "auto"
+						}]
+					}
+				},
+				"app-plus": {
+					"titleNView": {
+						"buttons": [{
+							"fontSrc": "/static/font.ttf",
+							"text": "\ue68f 提现记录",
+							"fontSize": "13px",
+							"width": "auto"
+						}]
+					}
+				}
+            }
+            
+        }
+        ,{
+            "path" : "pages/withdrawRecord/withdrawRecord",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "提现记录",
+                "enablePullDownRefresh": true
+            }
+            
+        }
+        ,{
+            "path" : "pages/creator/creator",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": true,
+				"navigationBarBackgroundColor": "#2f2f2f",
+				"navigationBarTextStyle": "white"
+            }
+            
+        }
+        ,{
+            "path" : "pages/customWebView/customWebView",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "nft",
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"backgroundColor": "#FFFFFF"
+	},
+	"tabBar": {
+		"color": "#909399",
+		"selectedColor": "#909399",
+		"backgroundColor": "#FFFFFF",
+		"borderStyle": "black",
+		"list": [{
+				"pagePath": "pages/home/home",
+				"iconPath": "static/img/home.png",
+				"selectedIconPath": "static/img/homeSelect.png",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/market/market",
+				"iconPath": "static/img/market.png",
+				"selectedIconPath": "static/img/marketSelect.png",
+				"text": "市场"
+			},
+			{
+				"pagePath": "pages/my/my",
+				"iconPath": "static/img/my.png",
+				"selectedIconPath": "static/img/mySelect.png",
+				"text": "我的"
+			}
+		]
+	}
+}

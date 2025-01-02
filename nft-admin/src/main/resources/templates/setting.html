@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title></title>
+<style type="text/css">
+.custom-sub-title {
+	font-weight: bold;
+	padding-bottom: 30px;
+}
+
+.custom-sub-tip {
+	color: #1976d2;
+}
+
+.custom-input {
+	display: flex;
+	align-items: center;
+}
+
+.custom-input-tip {
+	color: red;
+	font-size: smaller;
+	padding-left: 16px;
+}
+
+.rick-prepend {
+	font-size: 12px;
+	color: #1976d2;
+}
+
+.rick-append {
+	font-size: 12px;
+}
+</style>
+</head>
+<body>
+	<div th:replace="common/header::html"></div>
+	<div id="q-app">
+		<q-dialog persistent v-model="wenChangChainDialogFlag"> <q-card style="min-width: 450px;"> <q-card-section class="row items-center q-pb-none">
+		<div class="text-h6">文昌链</div>
+		<q-space></q-space> <q-btn icon="close" flat round dense v-close-popup></q-btn> </q-card-section> <q-card-section class="q-pt-none"> <q-form class="q-gutter-md"> <q-input outlined
+			v-model="wenChangChainSetting.apiGateway" label="API网关" :dense="true"></q-input> <q-input outlined v-model="wenChangChainSetting.apiKey" label="API Key" :dense="true"></q-input> <q-input outlined
+			v-model="wenChangChainSetting.apiSecret" label="API Secret" :dense="true"></q-input> <q-input outlined v-model="wenChangChainSetting.chainAddrSuper" label="归集账号(区块链地址)" :dense="true"></q-input> </q-form> </q-card-section> <q-card-actions
+			align="right"> <q-btn label="保存" color="primary" @click="updateWenChangChainSetting"></q-btn> </q-card-actions> </q-card> </q-dialog>
+		<div class="q-pa-md">
+			<div class="row">
+				<div class="col-2">
+					<q-tabs v-model="tab" vertical class="text-grey" active-color="primary" indicator-color="primary"> <q-tab v-for="tab in tabs" :name="tab.name" :label="tab.label"></q-tab> </q-tabs>
+				</div>
+				<div class="col">
+					<div class="q-pa-md">
+						<div v-show="tab == 'system'">
+							<div class="custom-sub-title">系统设置</div>
+							<div class="q-gutter-md">
+								<q-input type="number" style="max-width: 300px" outlined dense stack-label v-model.number="systemSetting.appVersion" label="APP最新版本号"></q-input>
+								<q-input style="max-width: 300px" outlined dense stack-label v-model="systemSetting.appUrl" label="APP下载地址"></q-input>
+								<q-input style="max-width: 300px" outlined dense stack-label v-model="systemSetting.appSchema" label="APP Schema"></q-input>
+								<q-input style="max-width: 300px" outlined dense stack-label v-model="systemSetting.h5Gateway" label="h5网关"></q-input>
+								<q-input style="max-width: 300px" outlined dense stack-label v-model="systemSetting.customerServiceUrl" label="客服系统链接"></q-input>
+								<q-input style="max-width: 300px" outlined dense stack-label v-model="systemSetting.localStoragePath" label="图片资源存放目录"></q-input>
+								<q-btn color="primary" label="更新" @click="updateSystemSetting"></q-btn>
+							</div>
+						</div>
+						<div v-show="tab == 'operation'">
+							<div class="custom-sub-title">运营设置</div>
+							<div class="q-gutter-md">
+								<q-checkbox v-model="operationSetting.primaryMarketFun" label="一级市场"></q-checkbox>
+								<q-checkbox v-model="operationSetting.giveFun" label="艺术品转赠"></q-checkbox>
+								<q-checkbox v-model="operationSetting.consignmentFun" label="二级市场寄售"></q-checkbox>
+								<div class="custom-input">
+									<q-input type="number" style="width: 300px" outlined dense stack-label v-model.number="operationSetting.giveLimitHoldDay" label="转赠限制(持有天数)"> </q-input>
+									<div class="custom-input-tip">艺术品进行转赠操作，需满足一定持有天数</div>
+								</div>
+								<div class="custom-input">
+									<q-input type="number" style="width: 300px" outlined dense stack-label v-model.number="operationSetting.consignmentLimitHoldDay" label="寄售限制(持有天数)"> </q-input>
+									<div class="custom-input-tip">艺术品进行寄售操作，需满足一定持有天数</div>
+								</div>
+								<q-input type="number" style="width: 300px" outlined dense stack-label v-model.number="operationSetting.consignmentMinAmount" label="最小寄售金额"></q-input>
+								<q-input type="number" style="width: 300px" outlined dense stack-label v-model.number="operationSetting.consignmentMaxAmount" label="最大寄售金额"></q-input>
+								<div class="custom-input">
+									<q-input type="number" style="width: 300px" outlined dense stack-label v-model.number="operationSetting.payOrderDeadline" label="支付订单有效时长(分钟)"> </q-input>
+									<div class="custom-input-tip">超过一定分钟数未付款，订单将自动取消</div>
+								</div>
+								<q-btn color="primary" label="更新" @click="updateOperationSetting"></q-btn>
+							</div>
+						</div>
+						<div v-show="tab == 'risk'">
+							<div class="custom-sub-title">风控设置</div>
+							<div class="q-gutter-md">
+								<div class="custom-input">
+									<q-input type="number" style="width: 130px" outlined dense v-model.number="riskSetting.orderUnpaidTimeRange"> <template v-slot:append>
+									<div class="rick-append">分钟内</div>
+									</template> </q-input>
+									<q-input type="number" style="width: 200px" outlined dense v-model.number="riskSetting.orderUnpaidCount"> <template v-slot:prepend>
+									<div class="rick-prepend">下单未付款达到</div>
+									</template> <template v-slot:append>
+									<div class="rick-append">次</div>
+									</template> </q-input>
+									<q-input type="number" style="width: 170px" outlined dense v-model.number="riskSetting.orderUnpaidPunish"> <template v-slot:prepend>
+									<div class="rick-prepend">限制下单</div>
+									</template> <template v-slot:append>
+									<div class="rick-append">分钟</div>
+									</template> </q-input>
+								</div>
+								<q-btn color="primary" label="更新" @click="updateRiskSetting"></q-btn>
+							</div>
+						</div>
+						<div v-show="tab == 'chain'">
+							<div class="custom-sub-title">区块链</div>
+							<div class="q-gutter-md">
+								<div class="row">
+									<div class="col">
+										<div>选择要上的链</div>
+										<template v-for="dictItem in chainTypes"> <q-radio v-model="currentInUseChain" :val="dictItem.value" :label="dictItem.name"></q-radio> </template>
+									</div>
+								</div>
+								<q-btn color="primary" label="更新" @click="updateCurrentInUseChain"></q-btn>
+								<q-btn color="primary" label="对接参数" v-show="currentInUseChain != 'none'" @click="showChainSettingDialg"></q-btn>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="/js/setting.js"></script>
+</body>
+</html>

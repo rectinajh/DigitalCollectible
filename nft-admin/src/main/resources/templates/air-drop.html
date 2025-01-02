@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title></title>
+<style type="text/css">
+.copy-btn {
+	padding-left: 4px;
+	cursor: pointer;
+}
+
+.viewer-container {
+	z-index: 9999 !important;
+}
+
+.hash-info {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	display: inline-block;
+	width: 200px;
+}
+
+.condition-checked-flag .q-checkbox__label {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+</style>
+</head>
+<body>
+	<script src="https://cdn.staticfile.org/dayjs/1.7.8/dayjs.min.js"></script>
+	<script src="https://cdn.staticfile.org/clipboard.js/2.0.4/clipboard.min.js"></script>
+	<link href="https://cdn.staticfile.org/viewerjs/1.3.3/viewer.min.css" rel="stylesheet">
+	<script src="https://cdn.staticfile.org/viewerjs/1.3.3/viewer.min.js"></script>
+	<div th:replace="common/header::html"></div>
+	<div id="q-app">
+		<q-dialog persistent v-model="memberSnapshotDialogFlag"> <q-card style="min-width: 320px;"> <q-card-section class="row items-center q-pb-none">
+		<div class="text-h6">符合条件的账号</div>
+		<q-space></q-space> <q-btn icon="close" flat round dense v-close-popup></q-btn> </q-card-section> <q-card-section class="q-pt-none"> <q-markup-table style="height: 400px"> <template>
+		<thead>
+			<tr>
+				<th class="text-left">手机号</th>
+				<th class="text-left">区块链地址</th>
+			</tr>
+		</thead>
+		</template> <template>
+		<tbody>
+			<tr v-for="memberSnapshot in memberSnapshots">
+				<td class="text-left">{{memberSnapshot.mobile}}</td>
+				<td class="text-left">{{memberSnapshot.blockChainAddr}}</td>
+			</tr>
+		</tbody>
+		</template> </q-markup-table>
+		<div style="padding-top: 6px;">
+			<span>预计空投人数:</span><span style="padding-left: 4px; color: blue;">{{memberSnapshots.length}}</span>
+		</div>
+
+		</q-card-section> </q-card> </q-dialog>
+
+		<q-dialog persistent v-model="showAddDialogFlag"> <q-card style="min-width: 530px;"> <q-card-section class="row items-center q-pb-none">
+		<div class="text-h6">新增任务</div>
+		<q-space></q-space> <q-btn icon="close" flat round dense v-close-popup></q-btn> </q-card-section> <q-card-section class="q-pt-none"> <q-form class="q-gutter-md"> <q-input outlined
+			v-model="selectedRecord.taskName" label="任务名称" :dense="true"></q-input> <q-select outlined v-model="selectedRecord.collectionId" emit-value map-options :options="collections" option-value=id
+			option-label="name" :dense="true" label="空投的艺术品"> </q-select> <q-input bottom-slots outlined v-model="selectedRecord.executeTime" label="空投时间" :dense="true"> <template v-slot:hint>
+		<q-checkbox dense v-model="selectedRecord.executeImmediatelyFlag" label="立即执行"></q-checkbox> </template> <template v-slot:append> <q-icon name="event" class="cursor-pointer"> <q-popup-proxy
+			transition-show="scale" transition-hide="scale"> <q-date v-model="selectedRecord.executeTime" mask="YYYY-MM-DD HH:mm">
+		<div class="row items-center justify-end">
+			<q-btn v-close-popup label="确定" color="primary" flat></q-btn>
+		</div>
+		</q-date> </q-popup-proxy> </q-icon> <q-icon name="access_time" class="cursor-pointer"> <q-popup-proxy transition-show="scale" transition-hide="scale"> <q-time v-model="selectedRecord.executeTime"
+			mask="YYYY-MM-DD HH:mm" format24h>
+		<div class="row items-center justify-end">
+			<q-btn v-close-popup label="确定" color="primary" flat></q-btn>
+		</div>
+		</q-time> </q-popup-proxy> </q-icon> </template> </q-input> </q-form> <q-markup-table style="height: 330px; margin-top:16px;"> <template>
+		<thead>
+			<tr>
+				<th class="text-left">空投条件</th>
+			</tr>
+		</thead>
+		</template> <template>
+		<tbody>
+			<tr v-for="(condition, index) in airDropConditions">
+				<td class="text-left">
+					<div style="display: flex;">
+						<q-checkbox class="condition-checked-flag" outlined style="min-width: 130px; max-width: 130px;justify-content: center;" v-model="condition.checkedFlag" :label="condition.fieldLabel"
+							:dense="true">
+						<q-tooltip anchor="top middle" self="bottom middle" v-if="condition.fieldName.startsWith('holdArtwork')">{{condition.fieldLabel}}</q-tooltip>	
+							</q-checkbox>
+						<q-select outlined style="min-width: 110px; max-width: 110px" v-model="condition.cond" emit-value map-options :options="condDictItems" option-value="dictItemCode" option-label="dictItemName"
+							:dense="true"> </q-select>
+						<q-input v-if="getFieldType(condition.fieldName) == 'number'" outlined type="number" v-model="condition.fieldValue" style="min-width: 150px; max-width: 150px" label="参数值" :dense="true"></q-input>
+						<q-input v-if="getFieldType(condition.fieldName) == 'date'" outlined v-model="condition.fieldValue" style="min-width: 150px; max-width: 150px" label="参数值" :dense="true"> <template
+							v-slot:append> <q-icon name="event" class="cursor-pointer"> <q-popup-proxy transition-show="scale" transition-hide="scale"> <q-date
+							v-model="condition.fieldValue" mask="YYYY-MM-DD">
+						<div class="row items-center justify-end">
+							<q-btn v-close-popup label="确定" color="primary" flat></q-btn>
+						</div>
+						</q-date> </q-popup-proxy> </q-icon> </template> </q-input>
+						<q-select v-show="index != airDropConditions.length - 1" outlined style="min-width: 70px; max-width: 70px" v-model="condition.logicalOperation" emit-value map-options
+							:options="logicalOperationDictItems" option-value="dictItemCode" option-label="dictItemName" :dense="true"> </q-select>
+					</div>
+				</td>
+			</tr>
+		</tbody>
+		</template> </q-markup-table>
+		<div style="display: flex; justify-content: space-between; align-items: center; padding-top: 6px;">
+			<div>注意:不加条件则空投全部有效会员</div>
+			<div>
+				<q-btn size="xs" label="查看空投人数" color="primary" @click="showMemberSnapshotDialog1"></q-btn>
+				<q-btn-dropdown ref="addConditionDropdown" size="xs" color="primary" label="添加条件"> <q-list> <template v-for="dictItem in snapshotParamDictItems"> <q-item
+					clickable v-close-popup v-if="dictItem.dictItemCode != 'holdArtwork'" @click="addAirDropCondition(dictItem)"> <q-item-section> <q-item-label>{{dictItem.dictItemName}}</q-item-label>
+				</q-item-section> </q-item> <q-btn-dropdown label="持有艺术品" v-if="dictItem.dictItemCode == 'holdArtwork'"> <q-list> <template v-for="collection in collections"> <q-item clickable
+					v-close-popup @click="addAirDropHoldArtworkCondition(dictItem, collection)"> <q-item-section> <q-item-label>{{collection.name}}</q-item-label> </q-item-section> </q-item> </template> </q-list> </q-btn-dropdown> </template> </q-list> </q-btn-dropdown>
+			</div>
+		</div>
+		</q-card-section> <q-card-actions align="right"> <q-btn label="保存" color="primary" @click="add"></q-btn> </q-card-actions> </q-card> </q-dialog>
+		<div class="q-pa-md">
+			<div class="row">
+				<div class="col-1">
+					<q-tabs v-model="tab" vertical class="text-grey" active-color="primary" indicator-color="primary"> <q-tab v-for="tab in tabs" :name="tab.name" :label="tab.label"></q-tab> </q-tabs>
+				</div>
+				<div class="col">
+					<div v-if="tab == 'task'">
+						<q-table color="primary" :data="tableData" :columns="tableColumns" :pagination.sync="tablePagination" :rows-per-page-options="[10, 30, 50, 100]" :loading="tableDataLoading"
+							@request="loadTableData"> <template v-slot:top-left>
+						<div class="q-gutter-md row query-cond">
+							<q-input outlined v-model="taskName" label="任务名称" :dense="true"></q-input>
+							<q-input outlined v-model="collectionName" label="艺术品名称" :dense="true"></q-input>
+							<q-select clearable outlined v-model="taskState" emit-value map-options :options="taskStateDictItems" option-value="dictItemCode" option-label="dictItemName" label="状态" :dense="true">
+							</q-select>
+							<q-btn color="primary" label="查询" icon="search" @click="refreshTable"></q-btn>
+						</div>
+						</template> <template v-slot:top-right>
+						<div class="q-gutter-md row">
+							<q-btn outline color="primary" label="新增任务" @click="showAddDialog"></q-btn>
+						</div>
+						</template> <template v-slot:body-cell-collection_info="props"> <q-td :props="props">
+						<div style="display: flex; align-items: center;">
+							<div>
+								<img :src="props.row.collectionCover" style="height: 50px; width: 50px; object-fit: contain;">
+							</div>
+							<div style="padding-left: 4px;">
+								<div>{{props.row.collectionName}}</div>
+							</div>
+						</div>
+						</q-td> </template> <template v-slot:body-cell-condition_info="props"> <q-td :props="props">
+						<div>
+							<div v-for="condition in props.row.airDropConditions">
+								<span style="color: #008eff;">{{formatFieldLabel(condition)}}</span><span>{{condition.cond}}</span><span style="color: #008eff;">{{condition.fieldValue}}</span><span>{{condition.logicalOperation}}</span>
+							</div>
+							<div v-show="props.row.state == '1'">
+								<q-btn size="xs" color="secondary" label="预计空投人数" @click="showMemberSnapshotDialog2(props.row.airDropConditions)"></q-btn>
+							</div>
+						</div>
+						</q-td> </template> <template v-slot:body-cell-action="props"> <q-td :props="props">
+						<div class=" q-gutter-sm">
+							<q-btn color="primary" label="空投记录" @click="showAirDropRecordWithAirDropTaskId(props.row.id)"></q-btn>
+						</div>
+						</q-td> </template> <template v-slot:loading> <q-inner-loading showing color="primary"></q-inner-loading> </template> </q-table>
+					</div>
+					<div v-if="tab == 'record'">
+						<q-table color="primary" :data="tableData" :columns="recordTableColumns" :pagination.sync="tablePagination" :rows-per-page-options="[10, 30, 50, 100]" :loading="tableDataLoading"
+							@request="loadTableData2"> <template v-slot:top-left>
+						<div class="q-gutter-md row query-cond">
+							<q-select clearable outlined v-model="bizType" emit-value map-options :options="bizTypeDictItems" option-value="dictItemCode" option-label="dictItemName" label="业务类型" :dense="true">
+							</q-select>
+							<q-select clearable outlined v-model="airDropTaskId" emit-value map-options :options="airDropTasks" option-value="id" option-label="taskName" label="空投任务" :dense="true"> </q-select>
+							<q-input outlined v-model="memberMobile" label="会员手机号" :dense="true"></q-input>
+							<q-input outlined v-model="collectionName" label="艺术品名称" :dense="true"></q-input>
+							<q-select clearable outlined v-model="recordState" emit-value map-options :options="recordStateDictItems" option-value="dictItemCode" option-label="dictItemName" label="状态" :dense="true">
+							</q-select>
+							<q-btn color="primary" label="查询" icon="search" @click="refreshTable2"></q-btn>
+						</div>
+						</template> <template v-slot:top-right> </template> <template v-slot:body-cell-biz_info="props"> <q-td :props="props">
+						<div>
+							<div>{{props.row.bizTypeName}}</div>
+							<div v-show="props.row.taskName">{{props.row.taskName}}</div>
+						</div>
+						</q-td> </template> <template v-slot:body-cell-member_info="props"> <q-td :props="props">
+						<div>
+							<div>手机号:{{props.row.memberMobile}}</div>
+							<div style="display: flex; align-items: center;">
+								区块链地址:<span class="hash-info">{{props.row.memberBlockChainAddr}}</span><span class="copy-btn" :data-clipboard-text="props.row.memberBlockChainAddr"><q-icon name="img:/images/copy.png"></q-icon></span>
+							</div>
+						</div>
+						</q-td> </template> <template v-slot:body-cell-collection_info="props"> <q-td :props="props">
+						<div style="display: flex; align-items: center;">
+							<div>
+								<img :src="props.row.collectionCover" style="height: 50px; width: 50px; object-fit: contain;">
+							</div>
+							<div style="padding-left: 4px;">
+								<div>{{props.row.collectionName}}</div>
+								<div v-show="props.row.collectionSerialNumber">#{{props.row.collectionSerialNumber}}/{{props.row.collectionQuantity}}</div>
+							</div>
+						</div>
+						</q-td> </template> <template v-slot:body-cell-action="props"> <q-td :props="props">
+						<div class=" q-gutter-sm"></div>
+						</q-td> </template> <template v-slot:loading> <q-inner-loading showing color="primary"></q-inner-loading> </template> </q-table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="/js/air-drop.js"></script>
+</body>
+</html>

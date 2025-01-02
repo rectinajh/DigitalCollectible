@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title></title>
+<style type="text/css">
+</style>
+</head>
+<body>
+	<div th:replace="common/header::html"></div>
+	<div id="q-app">
+		<q-dialog persistent v-model="showAddOrUpdateDialogFlag"> <q-card style="min-width: 350px;"> <q-card-section class="row items-center q-pb-none">
+		<div class="text-h6">{{addOrUpdateAction == 'add' ? '新增' : '编辑'}}</div>
+		<q-space></q-space> <q-btn icon="close" flat round dense v-close-popup></q-btn> </q-card-section> <q-card-section class="q-pt-none"> <q-form class="q-gutter-md"> <q-input outlined
+			type="textarea" rows="3" v-model="selectedRecord.cover" label="封面" :dense="true"></q-input> <q-select clearable outlined v-model="selectedRecord.clickDealWay" emit-value map-options
+			:options="clickDealWayDictItems" option-value="dictItemCode" option-label="dictItemName" label="点击处理方式" :dense="true"> </q-select> <q-input outlined type="textarea" rows="3"
+			v-model="selectedRecord.link" label="链接" :dense="true" v-show="selectedRecord.clickDealWay == '2' || selectedRecord.clickDealWay == '3'"></q-input> </q-form> </q-card-section> <q-card-actions align="right">
+		<q-btn label="保存" color="primary" @click="addOrUpdateCarousel"></q-btn> </q-card-actions> </q-card> </q-dialog>
+		<div class="q-pa-md">
+			<q-card> <q-card-section class="row items-center q-pb-none q-pb-md">
+			<div class="text-h6">首页轮播</div>
+			<q-space></q-space>
+			<div v-show="!adjustOrderNoFlag">
+				<q-btn outline color="primary" label="新增轮播内容" @click="showAddDialog"></q-btn>
+				<q-btn outline color="primary" label="调整顺序" @click="adjustOrderNoFlag = true"></q-btn>
+			</div>
+			<div v-show="adjustOrderNoFlag">
+				<q-btn outline color="primary" label="保存顺序" @click="adjustCarouselOrderNo"></q-btn>
+			</div>
+			</q-card-section> <q-card-section class="q-pt-none"> <q-markup-table> <template>
+			<thead>
+				<tr>
+					<th class="text-left" v-show="adjustOrderNoFlag"></th>
+					<th class="text-left">封面</th>
+					<th class="text-left">点击事件</th>
+					<th class="text-left">最后修改时间</th>
+					<th class="text-left" v-show="!adjustOrderNoFlag">操作</th>
+				</tr>
+			</thead>
+			</template> <template>
+			<tbody>
+				<tr v-for="(carousel, index) in carousels">
+					<td class="text-left" v-show="adjustOrderNoFlag"><q-btn-group> <q-btn size="xs" color="primary" icon="arrow_upward" :disable="index == 0" @click="moveUp(index)"></q-btn> <q-btn
+							size="xs" color="primary" icon="arrow_downward" :disable="index == carousels.length - 1" @click="moveDown(index)"></q-btn> </q-btn-group></td>
+					<td class="text-left"><div>
+							<img :src="carousel.cover" style="height: 50px; width: 50px; object-fit: contain;">
+						</div></td>
+					<td class="text-left">
+						<div>
+							<div>{{carousel.clickDealWayName}}</div>
+							<div v-show="carousel.link">{{carousel.link}}</div>
+						</div>
+					</td>
+					<td class="text-left">{{carousel.lastModifyTime}}</td>
+					<td class="text-left" v-show="!adjustOrderNoFlag">
+						<div class=" q-gutter-sm">
+							<q-btn color="primary" label="编辑" @click="showEditDialog(carousel.id)"></q-btn>
+							<q-btn color="primary" label="删除" @click="delById(carousel.id)"></q-btn>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+			</template> </q-markup-table> </q-card-section> </q-card>
+		</div>
+	</div>
+	<script src="/js/carousel.js"></script>
+</body>
+</html>

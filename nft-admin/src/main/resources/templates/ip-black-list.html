@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title></title>
+<style type="text/css">
+</style>
+</head>
+<body>
+	<div th:replace="common/header::html"></div>
+	<div id="q-app">
+		<div class="q-pa-md">
+			<q-table color="primary" :data="tableData" :columns="tableColumns" :pagination.sync="tablePagination" hide-pagination :loading="tableDataLoading" @request="loadTableData"> <template
+				v-slot:top-left>
+			<div class="q-gutter-md row query-cond">
+				<q-input outlined v-model="ipAddr" label="IP地址" :dense="true"></q-input>
+				<q-btn color="primary" label="查询" icon="search" @click="refreshTable"></q-btn>
+			</div>
+			</template> <template v-slot:top-right>
+			<div class="q-gutter-md row">
+				<q-btn outline color="primary" label="新增黑名单" @click="addIpBlackList"></q-btn>
+			</div>
+			</template> <template v-slot:body-cell-action="props"> <q-td :props="props">
+			<div class="q-gutter-sm">
+				<q-btn color="primary" label="删除" @click="delIpBlackList(props.row.ipAddr)"></q-btn>
+			</div>
+			</q-td> </template> <template v-slot:loading> <q-inner-loading showing color="primary"></q-inner-loading> </template> </q-table>
+		</div>
+	</div>
+	<script src="/js/ip-black-list.js"></script>
+</body>
+</html>
