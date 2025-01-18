@@ -30,6 +30,17 @@
 				<u-button type="primary" @click="login">立即登录</u-button>
 			</view>
 
+			<view class="login-btn">
+		<u-checkbox v-model="agreementChecked">
+			我已阅读并同意
+			<a :href="userAgreementLink" target="_blank">《用户协议》</a>
+			和
+			<a :href="privacyPolicyLink" target="_blank">《隐私政策》</a>
+		</u-checkbox>
+		<u-button type="primary" :disabled="!agreementChecked" @click="login">立即登录</u-button>
+	</view>
+
+
 			<view class="login-tip">未注册的手机号验证后可自动登录</view>
 		</view>
 	</view>
@@ -40,6 +51,9 @@
 		data() {
 			return {
 				mobile: '',
+				agreementChecked: false,
+				userAgreementLink: 'https://render.alipay.com/p/yuyan/180020010001196791/preview.html?agreementId=AG00000125',
+				privacyPolicyLink: 'https://render.alipay.com/p/yuyan/180020010001196791/preview.html?agreementId=AG01000075',
 				verificationCode: '',
 				inviteCode: '',
 				inviteCodeReadonly: false,
@@ -101,6 +115,13 @@
 
 			login() {
 				var that = this;
+				if (!that.agreementChecked) {
+					uni.showToast({
+						title: "请先同意用户协议和隐私政策",
+						icon: "none"
+					});
+					return;
+				}
 				if (that.mobile === null || that.mobile === "") {
 					uni.showToast({
 						title: "请输入手机号",
