@@ -1,5 +1,21 @@
 # DigitalCollectible
 
+测试环境：
+前端
+
+http://35.88.64.138/#/
+
+前端的账号密码是13533333333，6666
+
+后台管理:
+
+http://35.88.64.138:8080/page/login
+
+后台的账号密码是admin,123
+
+![b5b1e43e0ff19f57baa0aabe41b21757](https://github.com/user-attachments/assets/67d656fb-766e-434b-83c2-e4fafa02113e)
+
+
 ```
 环境要求：jdk1.8或以上，mysql5.7，redis随便一个版本
 nft系统是maven模块化项目,用的是spring boot框架
