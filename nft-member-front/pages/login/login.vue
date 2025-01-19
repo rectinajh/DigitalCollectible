@@ -52,8 +52,8 @@
 			return {
 				mobile: '',
 				agreementChecked: false,
-				userAgreementLink: 'https://render.alipay.com/p/yuyan/180020010001196791/preview.html?agreementId=AG00000125',
-				privacyPolicyLink: 'https://render.alipay.com/p/yuyan/180020010001196791/preview.html?agreementId=AG01000075',
+				userAgreementLink: 'https://github.com/rectinajh/DigitalCollectible/blob/main/%E7%81%B5%E5%A2%83%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1%E5%8D%8F%E8%AE%AE',
+				privacyPolicyLink: 'https://github.com/rectinajh/DigitalCollectible/blob/main/%E7%81%B5%E5%A2%83%E9%9A%90%E7%A7%81%E6%9D%83%E6%94%BF%E7%AD%96',
 				verificationCode: '',
 				inviteCode: '',
 				inviteCodeReadonly: false,
