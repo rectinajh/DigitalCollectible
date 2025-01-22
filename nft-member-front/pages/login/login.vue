@@ -26,9 +26,9 @@
 						:disabled="inviteCodeReadonly"></u-input>
 				</u-form-item>
 			</u-form>
-			<view class="login-btn">
+			<!-- <view class="login-btn">
 				<u-button type="primary" @click="login">立即登录</u-button>
-			</view>
+			</view> -->
 
 			<view class="login-btn">
 		<u-checkbox v-model="agreementChecked">
