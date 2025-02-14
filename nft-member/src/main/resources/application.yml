@@ -63,3 +63,7 @@ sa-token:
     token-style: random-64
             # 是否输出操作日志 
     is-log: false
+tencent-cloud:
+  sdkAppId: 1400963771
+  signName: 上海帼印网络科技
+  templateId: 2360134
