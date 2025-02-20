@@ -31,7 +31,7 @@ public class SaTokenConfig implements WebMvcConfigurer {
 				}
 			});
 		})).addPathPatterns("/**")
-				.excludePathPatterns("/login", "/sendLoginVerificationCode", "/dictconfig/**", "/setting/**",
+				.excludePathPatterns("/login","/oneClickLogin", "/sendLoginVerificationCode", "/dictconfig/**", "/setting/**",
 						"/storage/fetch/**", "/storage/inviteQrcode/**", "/error")
 				.excludePathPatterns("/notice/**", "/carousel/**", "/collection/**").excludePathPatterns("/favicon.ico");
 	}

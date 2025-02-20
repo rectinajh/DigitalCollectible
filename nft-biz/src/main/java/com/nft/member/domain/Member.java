@@ -64,6 +64,8 @@ public class Member implements Serializable {
 
 	private String payPwd;
 
+	private String loginPwd;
+
 	private Double balance;
 
 	private Boolean boughtFlag;
@@ -117,6 +119,22 @@ public class Member implements Serializable {
 		Member po = new Member();
 		po.setId(IdUtils.getId());
 		po.setNickName(nickName);
+		po.setMobile(mobile);
+		po.setState(Constant.功能状态_启用);
+		po.setAccountLevel(1);
+		po.setAccountLevelPath(po.getId());
+		po.setRegisteredTime(new Date());
+		po.setBalance(0d);
+		po.setKeepLoginDuration(12);
+		po.setInviteCode(RandomUtil.randomString(7));
+		po.setBoughtFlag(false);
+		po.setDeletedFlag(false);
+		return po;
+	}
+	public static Member buildPwd(String loginPwd, String mobile) {
+		Member po = new Member();
+		po.setId(IdUtils.getId());
+		po.setLoginPwd(loginPwd);
 		po.setMobile(mobile);
 		po.setState(Constant.功能状态_启用);
 		po.setAccountLevel(1);

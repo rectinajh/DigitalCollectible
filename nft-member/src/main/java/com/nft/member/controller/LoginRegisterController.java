@@ -2,6 +2,10 @@ package com.nft.member.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import cn.dev33.satoken.secure.SaSecureUtil;
+import com.nft.member.param.OneClickLoginParam;
+import com.nft.member.param.SettingLoginPwdParam;
+import com.tencentcloudapi.sms.v20210111.models.SendSmsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,15 +44,13 @@ public class LoginRegisterController {
 	private IpBlackListService ipBlackListService;
 
 	@GetMapping("/sendLoginVerificationCode")
-	public Result<String> sendLoginVerificationCode(String mobile) {
-		memberService.sendLoginVerificationCode(mobile);
-		return Result.success();
+	public Result<SendSmsResponse> sendLoginVerificationCode(String mobile) {
+		return Result.success(memberService.sendLoginVerificationCode(mobile));
 	}
 
 	@PostMapping("/login")
 	public Result<TokenInfo> login(LoginParam param, HttpServletRequest request) {
-		LoginLog loginlLog = LoginLog.buildLog(param.getMobile(), Constant.子系统_会员端, ServletUtil.getClientIP(request),
-				UserAgentUtil.parse(request.getHeader("User-Agent")));
+		LoginLog loginlLog = getLoginLog(param.getMobile(), request);
 		if (ipBlackListService.isIpBlackList(loginlLog.getIpAddr())) {
 			loginLogService.recordLoginLog(loginlLog.loginFail("IP地址已被封禁"));
 			throw new BizException("IP地址已被封禁");
@@ -58,10 +60,69 @@ public class LoginRegisterController {
 			loginLogService.recordLoginLog(loginlLog.loginFail("验证码不正确"));
 			throw new BizException("验证码不正确");
 		}
+		return getTokenInfoResult(param.getMobile(),param.getInviteCode(), loginlLog);
+	}
+
+
+
+	@PostMapping("/oneClickLogin")
+	public Result<TokenInfo> oneClickLogin(OneClickLoginParam param, HttpServletRequest request) {
+		LoginLog loginlLog = getLoginLog(param.getMobile(), request);
+		if (ipBlackListService.isIpBlackList(loginlLog.getIpAddr())) {
+			loginLogService.recordLoginLog(loginlLog.loginFail("IP地址已被封禁"));
+			throw new BizException("IP地址已被封禁");
+		}
+		return getTokenInfoResult(param.getMobile(),param.getInviteCode(), loginlLog);
+	}
+
+	@PostMapping("/logout")
+	public Result<String> loginOut() {
+		StpUtil.logout();
+		return Result.success();
+	}
+	@PostMapping("/settingLoginPwd")
+	public Result<String> settingLoginPwd(SettingLoginPwdParam param) {
+		memberService.settingLoginPwd(param.getMobile(),param.getPwd());
+		return Result.success();
+	}
+	@PostMapping("/loginByPwd")
+	public Result<TokenInfo> loginByPwd(SettingLoginPwdParam param, HttpServletRequest request) {
+		
+		LoginLog loginlLog = getLoginLog(param.getMobile(), request);
+		if (ipBlackListService.isIpBlackList(loginlLog.getIpAddr())) {
+			loginLogService.recordLoginLog(loginlLog.loginFail("IP地址已被封禁"));
+			throw new BizException("IP地址已被封禁");
+		}
+
 		AccountAuthInfoVO vo = memberService.getAccountAuthInfo(param.getMobile());
 		if (vo == null) {
-			memberService.registerAccount(param.getMobile(), param.getInviteCode());
-			vo = memberService.getAccountAuthInfo(param.getMobile());
+			throw new BizException("请先注册账号");
+		}
+		if (Constant.功能状态_禁用.equals(vo.getState())) {
+			loginLogService.recordLoginLog(loginlLog.loginFail("账号已被禁用"));
+			throw new BizException("账号已被禁用");
+		}
+		if (!SaSecureUtil.sha256(param.getPwd()).equals(vo.getLoginPwd())) {
+			loginLogService.recordLoginLog(loginlLog.loginFail("账号或密码不正确"));
+			throw new BizException("账号或密码不正确");
+		}
+
+		StpUtil.login(vo.getId(),
+				new SaLoginModel().setIsLastingCookie(false).setTimeout(60 * 60 * vo.getKeepLoginDuration()));
+		StpUtil.getSession().set("mobile", vo.getMobile());
+		StpUtil.getSession().set("subSystem", Constant.子系统_会员端);
+		TokenInfo tokenInfo = TokenInfo.build();
+		tokenInfo.setAccountId(vo.getId());
+
+		loginLogService.recordLoginLog(loginlLog.loginSuccess(StpUtil.getTokenInfo().getTokenValue()));
+		memberService.updateLatelyLoginTime(vo.getId());
+		return Result.success(tokenInfo);
+	}
+	private Result<TokenInfo> getTokenInfoResult( String mobile, String inviteCode, LoginLog loginlLog) {
+		AccountAuthInfoVO vo = memberService.getAccountAuthInfo(mobile);
+		if (vo == null) {
+			memberService.registerAccount(mobile, inviteCode);
+			vo = memberService.getAccountAuthInfo(mobile);
 		}
 		if (Constant.功能状态_禁用.equals(vo.getState())) {
 			loginLogService.recordLoginLog(loginlLog.loginFail("账号已被禁用"));
@@ -79,11 +140,9 @@ public class LoginRegisterController {
 		memberService.updateLatelyLoginTime(vo.getId());
 		return Result.success(tokenInfo);
 	}
-
-	@PostMapping("/logout")
-	public Result<String> login() {
-		StpUtil.logout();
-		return Result.success();
+	private LoginLog getLoginLog(String mobile,HttpServletRequest request) {
+		return LoginLog.buildLog(mobile, Constant.子系统_会员端, ServletUtil.getClientIP(request),
+				UserAgentUtil.parse(request.getHeader("User-Agent")));
 	}
 
 }
