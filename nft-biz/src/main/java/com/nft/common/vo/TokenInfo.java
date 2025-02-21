@@ -13,6 +13,8 @@ public class TokenInfo {
 	
 	private String accountId;
 
+	private String hasLoginPwd;
+
 	public static TokenInfo build() {
 		SaTokenInfo saTokenInfo = StpUtil.getTokenInfo();
 		TokenInfo tokenInfo = new TokenInfo();

@@ -244,7 +244,7 @@ public class MemberService {
 			throw new BizException("请先注册登录");
 		}else {
 			String loginPwd = SaSecureUtil.sha256(pwd);
-			newAccount = Member.buildPwd(loginPwd,mobile);
+			newAccount.setLoginPwd(loginPwd);
 			memberRepo.save(newAccount);
 		}
 

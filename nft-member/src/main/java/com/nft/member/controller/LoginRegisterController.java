@@ -120,7 +120,9 @@ public class LoginRegisterController {
 	}
 	private Result<TokenInfo> getTokenInfoResult( String mobile, String inviteCode, LoginLog loginlLog) {
 		AccountAuthInfoVO vo = memberService.getAccountAuthInfo(mobile);
+		String flag = "";
 		if (vo == null) {
+			flag = "1";
 			memberService.registerAccount(mobile, inviteCode);
 			vo = memberService.getAccountAuthInfo(mobile);
 		}
@@ -135,6 +137,7 @@ public class LoginRegisterController {
 		StpUtil.getSession().set("subSystem", Constant.子系统_会员端);
 		TokenInfo tokenInfo = TokenInfo.build();
 		tokenInfo.setAccountId(vo.getId());
+		tokenInfo.setHasLoginPwd(flag);
 
 		loginLogService.recordLoginLog(loginlLog.loginSuccess(StpUtil.getTokenInfo().getTokenValue()));
 		memberService.updateLatelyLoginTime(vo.getId());
