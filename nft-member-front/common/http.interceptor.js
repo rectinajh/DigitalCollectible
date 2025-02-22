@@ -1,4 +1,7 @@
 // 这里的vm，就是我们在vue文件里面的this，所以我们能在这里获取vuex的变量，比如存放在里面的token
+
+import store from "../store";
+
 // 同时，我们也可以在此使用getApp().globalData，如果你把token放在getApp().globalData的话，也是可以使用的
 const install = (Vue, vm) => {
 	Vue.prototype.$u.http.setConfig({
@@ -48,6 +51,11 @@ const install = (Vue, vm) => {
 			});
 			if (res.data.code == 999) {
 				uni.removeStorageSync('tokenName');
+				store.dispatch('logout');
+				uni.showToast({
+					title: '请重新登录',
+					icon: 'none'
+				});
 				setTimeout(() => {
 					uni.reLaunch({
 						url: "../login/login"

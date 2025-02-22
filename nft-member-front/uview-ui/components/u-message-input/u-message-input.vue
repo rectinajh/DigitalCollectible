@@ -10,7 +10,7 @@
 					fontSize: fontSize + 'rpx',
 					width: width + 'rpx',
 					height: width + 'rpx',
-					color: inactiveColor,
+					color: fontColor,
 					borderColor: charArrLength === index && mode == 'box' ? activeColor : inactiveColor
 				}">
 					<view class="u-placeholder-line" :style="{
@@ -116,6 +116,10 @@
 			disabledKeyboard: {
 				type: Boolean,
 				default: false
+			},
+			fontColor:{
+				type:String,
+				default:'#fff'
 			}
 		},
 		watch: {

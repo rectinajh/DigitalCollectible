@@ -26,6 +26,9 @@
 				</u-cell-item>
 			</u-cell-group>
 			<u-cell-group title="账号安全" :border="false" :title-style="titleStyle">
+				<u-cell-item title="密码设置" :arrow="true" :border-bottom="false" :title-style="titleStyle"
+					@click="settingPwd">
+				</u-cell-item>
 				<u-cell-item title="实名认证" :arrow="true" :border-bottom="false" :title-style="titleStyle"
 					@click="bindRealName">
 					<view class="real-name" v-show="personalInfo">
@@ -151,6 +154,7 @@
 						url: "../login/login"
 					});
 				});
+				this.$store.dispatch('logout')
 			},
 
 			getMyPersonalInfo() {
@@ -168,6 +172,11 @@
 				uni.navigateTo({
 					url: path
 				});
+			},
+			
+			settingPwd(){
+				let path="/subPackages/setting/settingPwd/settingPwd"
+				this.gotoPage(`/subPackages/setting/verification/verification?type='pwd'`)
 			}
 
 		}

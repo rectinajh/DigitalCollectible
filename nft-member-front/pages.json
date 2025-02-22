@@ -15,18 +15,19 @@
 			"style": {
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": true,
-				"h5": {
-					"titleNView": false
-				},
-				"app-plus": {
-					"titleNView": false
-				}
+				"navigationStyle": "custom"
+				// "h5": {
+				// 	"titleNView": true
+				// },
+				// "app-plus": {
+				// 	"titleNView": true
+				// }
 			}
 		},
 		{
 			"path": "pages/login/login",
 			"style": {
-				"navigationBarTitleText": "登录",
+				"navigationBarTitleText": "",
 				"enablePullDownRefresh": false
 			}
 		}, {
@@ -96,12 +97,7 @@
 			"style": {
 				"navigationBarTitleText": "",
 				"enablePullDownRefresh": true,
-				"h5": {
-					"titleNView": false
-				},
-				"app-plus": {
-					"titleNView": false
-				}
+				"navigationStyle": "custom"
 			}
 
 		}, {
@@ -341,33 +337,72 @@
             
         }
     ],
+	"subPackages": [
+		{
+			"name": "collection",
+			"root": "subPackages/collection",
+			"pages": [{
+				"path" : "collectionDetail/collectionDetail",
+				"style" : 
+				{
+					"navigationBarTitleText" : "",
+					"navigationStyle": "custom"
+				}
+			}
+				
+			]
+		},
+		{
+			"name": "setting",
+			"root": "subPackages/setting",
+			"pages": [{
+				"path" : "settingPwd/settingPwd",
+				"style" : 
+				{
+					"navigationBarTitleText" : "修改登录密码"
+				}
+			},
+			{
+				"path" : "verification/verification",
+				"style" : 
+				{
+					"navigationBarTitleText" : ""
+				}
+			}
+				
+			]
+		}
+	],
 	"globalStyle": {
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "nft",
-		"navigationBarBackgroundColor": "#FFFFFF",
-		"backgroundColor": "#FFFFFF"
+		"navigationBarTextStyle": "white",
+		// "navigationBarTitleText": "nft",
+		"navigationBarBackgroundColor": "#0C0C0D",
+		"backgroundColor": "#0C0C0D"
 	},
 	"tabBar": {
-		"color": "#909399",
-		"selectedColor": "#909399",
-		"backgroundColor": "#FFFFFF",
+		"blurEffect":"dark",
+		"color": "#999999",
+		"selectedColor": "#FFFFFF",
+		"backgroundColor": "rgba(0, 0, 0, 0.8)",
 		"borderStyle": "black",
+		"fontSize": "18rpx",
+		"spacing": "10rpx",
 		"list": [{
 				"pagePath": "pages/home/home",
-				"iconPath": "static/img/home.png",
-				"selectedIconPath": "static/img/homeSelect.png",
+				"iconPath": "/static/img/tabbar/home1.png",
+				"selectedIconPath": "/static/img/tabbar/home2.png",
 				"text": "首页"
 			},
 			{
 				"pagePath": "pages/market/market",
-				"iconPath": "static/img/market.png",
-				"selectedIconPath": "static/img/marketSelect.png",
+				"iconPath": "/static/img/tabbar/world1.png",
+				"selectedIconPath": "/static/img/tabbar/world2.png",
 				"text": "市场"
 			},
 			{
 				"pagePath": "pages/my/my",
-				"iconPath": "static/img/my.png",
-				"selectedIconPath": "static/img/mySelect.png",
+				"iconPath": "/static/img/tabbar/mine1.png",
+				"selectedIconPath": "/static/img/tabbar/mine2.png",
 				"text": "我的"
 			}
 		]

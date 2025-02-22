@@ -213,6 +213,10 @@ export default {
 		showConfirmbar:{
 			type:Boolean,
 			default:true
+		},
+		color:{
+			type:String,
+			default:'#fff'
 		}
 	},
 	data() {
@@ -346,7 +350,7 @@ export default {
 	&__input {
 		//height: $u-form-item-height;
 		font-size: 28rpx;
-		color: $u-main-color;
+		// color: $u-main-color;
 		flex: 1;
 	}
 

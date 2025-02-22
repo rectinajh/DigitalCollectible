@@ -492,6 +492,7 @@
 				var that = this;
 				this.$u.get('/member/getMyPersonalInfo').then(res => {
 					that.personalInfo = res.data;
+					that.$store.dispatch('updateUserInfo',that.personalInfo)
 				});
 			},
 		}

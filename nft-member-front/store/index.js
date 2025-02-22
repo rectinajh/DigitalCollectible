@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import userInfo from '@/store/modules/userInfo.js'
 Vue.use(Vuex)
 
 let lifeData = {};
@@ -28,10 +29,15 @@ const saveLifeData = function(key, value){
 	}
 }
 const store = new Vuex.Store({
+	modules: {
+		userInfo
+	},
 	state: {
 		// 如果上面从本地获取的lifeData对象下有对应的属性，就赋值给state中对应的变量
 		// 加上vuex_前缀，是防止变量名冲突，也让人一目了然
-		baseUrl: 'http://139.155.182.6:8080/'
+		// baseUrl: 'http://192.168.110.71:8080',//后端本地
+		baseUrl: 'http://139.155.182.6:8080',
+		// baseUrl: 'http://35.88.64.138:8081',
 	},
 	mutations: {
 		$uStore(state, payload) {

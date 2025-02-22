@@ -25,4 +25,17 @@
 
 <style lang="scss">
 	@import "uview-ui/index.scss";
+	@import '/common/css/common.scss';
+	@font-face {
+		font-family: OPPOSans-M;
+		src: url('@/static/fonts/OPPOSans-M.ttf');
+	}
+	@font-face {
+		font-family: OPPOSans-L;
+		src: url('@/static/fonts/OPPOSans-L.ttf');
+	}
+	page{
+		background-color: #0C0C0D;
+		color: #fff;
+	}
 </style>

@@ -1,8 +1,8 @@
 {
-    "name" : "nft",
-    "appid" : "__UNI__A004993",
+    "name" : "灵境",
+    "appid" : "__UNI__C33C6E0",
     "description" : "",
-    "versionName" : "1.8.4",
+    "versionName" : "0.0.3",
     "versionCode" : "100",
     "transformPx" : false,
     "app-plus" : {
@@ -23,7 +23,10 @@
         "usingComponents" : true,
         "nvueCompiler" : "uni-app",
         "compilerVersion" : 3,
-        "modules" : {},
+        "modules" : {
+            "OAuth" : {},
+            "Camera" : {}
+        },
         "distribute" : {
             "android" : {
                 "permissions" : [
@@ -48,7 +51,8 @@
                     "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
                 ],
                 "abiFilters" : [ "armeabi-v7a", "arm64-v8a" ],
-                "schemes" : "c2cpay"
+                "schemes" : "c2cpay",
+                "minSdkVersion" : 21
             },
             "ios" : {
                 "urltypes" : "c2cpay",
@@ -56,7 +60,10 @@
             },
             "sdkConfigs" : {
                 "ad" : {},
-                "push" : {}
+                "push" : {},
+                "oauth" : {
+                    "univerify" : {}
+                }
             },
             "icons" : {
                 "android" : {

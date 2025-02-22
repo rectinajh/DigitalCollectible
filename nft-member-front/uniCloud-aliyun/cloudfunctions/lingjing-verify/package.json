@@ -1,0 +1,7 @@
+{
+  "name": "lingjing-verify",
+  "dependencies": {},
+  "extensions": {
+    "uni-cloud-verify": {}
+  }
+}

@@ -1,200 +1,79 @@
 <template>
 	<view class="page-content">
+		<status-bar></status-bar>
 		<view class="home-title">
-			<u-image width="90rpx" height="90rpx" src="/static/img/c2c.png"></u-image>
-			<view class="home-title-r">OPEN NFT</view>
+			<u-image width="76rpx" height="64rpx" src="/static/img/home/logo.png"></u-image>
+			<u-search placeholder="发现更多精彩" bgColor="#242425" :showAction="false" placeholderColor="#666666" color="#fff"
+			margin="0 32rpx" v-model="keyword" searchIcon="/static/img/common/search.png"></u-search>
+			<u-image width="40rpx" height="40rpx" src="/static/img/home/msg.png"></u-image>
 		</view>
-		<view class="swiper-content">
-			<u-swiper name="cover" :list="carousels" :autoplay="false" :effect3d="true" mode="dot" border-radius="0"
-				effect3d-previous-margin="0" @click="carouselClickEvent"></u-swiper>
-		</view>
-		<view class="system-notice">
-			<u-notice-bar mode="vertical" :list="noticeTitles" type="none" padding="18rpx 0rpx" :more-icon="true"
-				@click="noticeDetailPage" @getMore="noticePage"></u-notice-bar>
-		</view>
+		<view class="titleSpace"></view>
+		<view class="main">
+			<view class="swiper-content">
+				<u-swiper name="cover" :list="carousels" :autoplay="false" :effect3d="true" mode="dot"
+					border-radius="24" effect3d-previous-margin="0" @click="carouselClickEvent" height="272"
+					bgColor="#0C0C0D"></u-swiper>
+			</view>
+			<view class="system-notice">
+				<view class="img">
+					<u-image src="@/static/img/home/notice.png" width="42rpx" height="26rpx"></u-image>
+				</view>
+				<view class="notice">
+					<u-notice-bar mode="vertical" :list="noticeTitles" type="none" padding="16rpx 16rpx 16rpx 90rpx"
+						color="#fff" :font-size="24" :volume-icon="false" :more-icon="true" @click="noticeDetailPage"
+						@getMore="noticePage"></u-notice-bar>
+				</view>
+			</view>
 
-		<u-sticky offset-top="-100" :enable="enableStickyFlag" @fixed="stickyFixedFlag = true;"
-			@unfixed="stickyFixedFlag = false;">
-			<view class="sticky" :class="{'sticky-fixed':stickyFixedFlag}">
-				<view class="top-nav">
-					<view v-for="tab in tabs" :class="{'top-nav-selected':currentTab == tab.value}"
-						@click="switchTab(tab.value)">{{tab.title}}</view>
+			<u-sticky :offset-top="statusbarHeight" :enable="enableStickyFlag" @fixed="stickyFixedFlag = true;"
+				@unfixed="stickyFixedFlag = false;">
+				<view class="sticky" :class="{'sticky-fixed':stickyFixedFlag}">
+					<view class="top-nav">
+						<view v-for="tab in tabs" :class="{'top-nav-selected':currentTab == tab.value}"
+							@click="switchTab(tab.value)">{{tab.title}}</view>
+					</view>
 				</view>
+			</u-sticky>
+			<view class="sell-calendar-content" v-show="currentTab == '3'">
+				<calendar-list :list="forSaleCollections"></calendar-list>
+				<view class="more-await">更多内容敬请期待</view>
 			</view>
-		</u-sticky>
-		<view class="sell-calendar-content" v-show="currentTab == '3'">
-			<view class="sell-plan">近期发售计划</view>
-			<view class="sell-date" v-for="dateCollection in forSaleCollections">
-				<view class="sell-date-value">{{dateCollection.date}}</view>
-				<view class="sell-time" v-for="timeCollection in dateCollection.timeCollections">
-					<view class="sell-time-value">{{timeCollection.time}}</view>
-					<view class="sell-collection" v-for="collection in timeCollection.collections"
-						@click="latestCollectionDetailPage(collection.id)">
-						<view class="sell-collection-l">
-							<u-image width="100%" height="220rpx" border-radius="50" :src="collection.cover">
-							</u-image>
-						</view>
-						<view class="sell-collection-r">
-							<view class="sell-collection-r1 u-line-1">
-								{{collection.creatorName}}·{{collection.name}}
-							</view>
-							<view class="sell-collection-r2">
-								<view class="limit">限量</view>
-								<view class="quantity">{{collection.quantity}}份</view>
-							</view>
-							<view class="sell-collection-r3">
-								<view>￥</view>
-								<view>{{collection.price}}</view>
-							</view>
-						</view>
-					</view>
-				</view>
+			<view class="collection-tab-content" v-show="currentTab == '1'">
+				<waterfall-list :list="latestCollections"></waterfall-list>
+				<view class="more-await">更多内容敬请期待</view>
 			</view>
-			<view class="more-await">更多内容敬请期待</view>
-		</view>
-		<view class="collection-tab-content" v-show="currentTab == '1'">
-			<view class="latest-collection" v-for="collection in latestCollections"
-				@click="latestCollectionDetailPage(collection.id)">
-				<view class="state-tip">
-					<view class="state-block">
-						<view class="sell-out" v-show="collection.stock == 0">
-							<u-icon size="26" name="clock"></u-icon>
-							<text>已售罄</text>
-						</view>
-						<view v-show="collection.stock > 0">
-							<view class="for-sale" v-show="collection.surplusSecond == 0">
-								<u-icon size="26" name="clock"></u-icon>
-								<text>抢购中</text>
-							</view>
-							<view class="future-sale" v-show="collection.surplusSecond > 86400">
-								<u-icon size="26" name="clock"></u-icon>
-								<text>敬请期待</text>
-								<text>{{collection.saleTime}}</text>
-								<text>开售</text>
-							</view>
-							<view class="for-sale"
-								v-show="collection.surplusSecond > 0 && collection.surplusSecond <= 86400">
-								<u-icon size="26" name="clock"></u-icon>
-								<text>即将开售</text>
-								<u-count-down :show-days="false" color="#59d195" separator-size="26"
-									separator-color="#59d195" bg-color="#000000" font-size="26"
-									:timestamp="collection.surplusSecond"></u-count-down>
-							</view>
-						</view>
-					</view>
-				</view>
-				<view class="pre-sale-tip" v-show="collection.preSaleFlag && collection.surplusSecond > 0">
-					<view class="pre-sale-block">
-						<view>
-							<view class="pre-sale">
-								<u-icon size="26" name="heart"></u-icon>
-								<text>优先购</text>
-							</view>
-						</view>
-					</view>
-				</view>
-				<image class="collection-cover" style="height: 480rpx; width: 100%;" :src="collection.cover"></image>
-				<view class="collection-name">{{collection.name}}</view>
-				<view class="quantity-block">
-					<view class="limit">限量</view>
-					<view class="quantity">{{collection.quantity}}份</view>
-				</view>
-				<view class="creator-block">
-					<view class="creator-info">
-						<u-image class="creator-avatar" width="48rpx" height="48rpx" shape="circle"
-							:src="collection.creatorAvatar">
-						</u-image>
-						<view class="creator-name">{{collection.creatorName}}</view>
-					</view>
-					<view class="price-info">
-						<view>￥</view>
-						<view>{{moneyFormat(collection.price)}}</view>
-					</view>
-				</view>
+			<view class="collection-tab-content" v-show="currentTab == '2'">
+				<waterfall-list :list="latestMysteryBoxs"></waterfall-list>
 			</view>
-			<view class="more-await">更多内容敬请期待</view>
-		</view>
-		<view class="collection-tab-content" v-show="currentTab == '2'">
-			<view class="latest-collection" v-for="collection in latestMysteryBoxs"
-				@click="latestCollectionDetailPage(collection.id)">
-				<view class="state-tip">
-					<view class="state-block">
-						<view class="sell-out" v-show="collection.stock == 0">
-							<u-icon size="26" name="clock"></u-icon>
-							<text>已售罄</text>
-						</view>
-						<view v-show="collection.stock > 0">
-							<view class="for-sale" v-show="collection.surplusSecond == 0">
-								<u-icon size="26" name="clock"></u-icon>
-								<text>抢购中</text>
-							</view>
-							<view class="future-sale" v-show="collection.surplusSecond > 86400">
-								<u-icon size="26" name="clock"></u-icon>
-								<text>敬请期待</text>
-								<text>{{collection.saleTime}}</text>
-								<text>开售</text>
-							</view>
-							<view class="for-sale"
-								v-show="collection.surplusSecond > 0 && collection.surplusSecond <= 86400">
-								<u-icon size="26" name="clock"></u-icon>
-								<text>即将开售</text>
-								<u-count-down :show-days="false" color="#59d195" separator-size="26"
-									separator-color="#59d195" bg-color="#000000" font-size="26"
-									:timestamp="collection.surplusSecond"></u-count-down>
-							</view>
-						</view>
-					</view>
-				</view>
-				<view class="pre-sale-tip" v-show="collection.preSaleFlag && collection.surplusSecond > 0">
-					<view class="pre-sale-block">
-						<view>
-							<view class="pre-sale">
-								<u-icon size="26" name="heart"></u-icon>
-								<text>优先购</text>
-							</view>
-						</view>
-					</view>
-				</view>
-				<image class="collection-cover" style="height: 480rpx; width: 100%;" :src="collection.cover"></image>
-				<view class="collection-name">{{collection.name}}</view>
-				<view class="quantity-block">
-					<view class="limit">限量</view>
-					<view class="quantity">{{collection.quantity}}份</view>
-				</view>
-				<view class="creator-block">
-					<view class="creator-info">
-						<u-image class="creator-avatar" width="48rpx" height="48rpx" shape="circle"
-							:src="collection.creatorAvatar">
-						</u-image>
-						<view class="creator-name">{{collection.creatorName}}</view>
-					</view>
-					<view class="price-info">
-						<view>￥</view>
-						<view>{{moneyFormat(collection.price)}}</view>
-					</view>
-				</view>
-			</view>
-			<view class="more-await">更多内容敬请期待</view>
 		</view>
 	</view>
+
 </template>
 
 <script>
+	import waterfallList from "@/components/waterfall-list/waterfall-list.vue"
+	import calendarList from "@/components/calendar-list/calendar-list.vue"
+	import {
+		mapGetters
+	} from 'vuex'
 	export default {
 		data() {
 			return {
 				stickyFixedFlag: false,
 				enableStickyFlag: true,
 				tabs: [{
-					title: '热卖藏品',
-					value: '1'
-				}, {
-					title: '盲盒系列',
-					value: '2'
-				}, {
-					title: '发售日历',
-					value: '3'
-				}],
+						title: '热卖藏品',
+						value: '1'
+					},
+					{
+						title: '盲盒系列',
+						value: '2'
+					}, 
+					{
+						title: '发售日历',
+						value: '3'
+					}
+				],
 				currentTab: '1',
 				carousels: [],
 				latestCollections: [],
@@ -206,12 +85,40 @@
 				noDataFlag: false,
 				notices: [],
 				noticeTitles: [],
+				keyword: '', //搜索关键词
+				statusbarHeight:''
 			}
 		},
-		onLoad() {
+		components: {
+			waterfallList,
+			calendarList
+		},
+		computed: {
+			...mapGetters(['userInfo'])
+		},
+		onLoad(options) {
 			this.findTopNotice();
 			this.findLatestCollectionByPage();
+			this.findForSaleCollection();
 			this.findCarousel();
+			// #ifdef APP
+			this.statusbarHeight=41 + 128
+			// #endif
+			
+			// #ifdef H5
+			this.statusbarHeight= 41
+			// #endif
+			// let userInfo = {
+			// 	mobile: '18161017379'
+			// }
+			// this.$store.dispatch('updateUserInfo', userInfo)
+			// if(options.toPwd){
+			// 	this.$nextTick(()=>{
+			// 		uni.navigateTo({
+			// 			url:'/subPackages/setting/settingPwd/settingPwd',
+			// 		})
+			// 	})
+			// }
 		},
 		onShow() {
 			this.enableStickyFlag = true;
@@ -300,8 +207,15 @@
 			},
 
 			switchTab(tab) {
+				if (tab === this.currentTab) return
 				this.currentTab = tab;
 				this.refreshData();
+				if (tab == 3) {
+					uni.pageScrollTo({
+						selector: '.top-nav',
+						duration: 0
+					});
+				}
 			},
 
 			refreshData() {
@@ -426,25 +340,47 @@
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
 	page {
 		height: 100% !important;
 	}
 
 	.system-notice {
-		padding-top: 12rpx;
+		position: relative;
+		width: 686rpx;
+		height: 68rpx;
+		background-color: #272727;
+		border-radius: 12rpx;
+		margin-top: 32rpx;
+
+		.img {
+			position: absolute;
+			left: 24rpx;
+			top: 18rpx;
+		}
+
+		.notice {}
 	}
 
 	.home-title {
 		display: flex;
 		align-items: center;
 		padding-bottom: 32rpx;
+		position: fixed;
+		padding: 32rpx 32rpx 32rpx 32rpx;
+		z-index: 1000;
+		background-color: #0C0C0D;
+		width: 100%;
+	}
+
+	.titleSpace {
+		height: 128rpx;
 	}
 
 	.home-title-r {
 		font-size: 52rpx;
 		padding-left: 40rpx;
-		color: rgb(53 53 53 / 60%);
+		color: rgb(53, 53, 53 / 60%);
 	}
 
 	.more-await {
@@ -532,29 +468,29 @@
 		padding-bottom: 20rpx;
 		margin-bottom: 24rpx;
 	}
-	
+
 	.pre-sale-tip {
 		position: absolute;
 		top: 100rpx;
 		z-index: 500;
 		left: 32rpx;
 	}
-	
+
 	.pre-sale-block {
-	    display: inline-block;
-	    border-radius: 10px;
-	    background: #000000;
-	    padding-left: 6px;
-	    padding-right: 6px;
-	    padding-top: 3px;
-	    padding-bottom: 3px;
-	    font-size: small;
+		display: inline-block;
+		border-radius: 10px;
+		background: #000000;
+		padding-left: 6px;
+		padding-right: 6px;
+		padding-top: 3px;
+		padding-bottom: 3px;
+		font-size: small;
 	}
-	
+
 	.pre-sale-block .u-icon {
 		padding-right: 6rpx;
 	}
-	
+
 	.pre-sale {
 		color: #ff9900;
 	}
@@ -664,18 +600,25 @@
 	}
 
 	.sticky {
-		background-color: #ffffff;
+		background-color: #0C0C0D;
 	}
 
 	.sticky-fixed {
 		padding-bottom: 12rpx;
+		background-color: #0C0C0D;
+		width: 101%;
+		// margin-top: 128rpx;
 	}
 
 	.top-nav {
 		display: flex;
-		color: #969696;
-		font-size: 36rpx;
+		color: #999999;
+		background-color: #0C0C0D;
+		font-size: 32rpx;
 		line-height: 3;
+		width: 100%;
+		padding-left: 32rpx;
+		margin-left: -32rpx;
 	}
 
 	.top-nav view {
@@ -683,17 +626,27 @@
 	}
 
 	.top-nav-selected {
-		color: #000000;
-		font-weight: bold;
+		color: #FFFFFF;
+		// font-weight: bold;
 	}
 
 	.page-content {
-		padding-left: 32rpx;
-		padding-right: 32rpx;
-		padding-bottom: 140rpx;
-		padding-top: 32rpx;
+		background-color: #0C0C0D;
+		// padding-left: 32rpx;
+		// padding-right: 32rpx;
+		// padding-bottom: 140rpx;
+		// padding-top: 32rpx;
 		// #ifdef APP-PLUS
-		padding-top: 64rpx;
+		// padding-top: 64rpx;
+
 		// #endif
+		.main {
+			padding: 32rpx 32rpx 140rpx 32rpx;
+			// .swiper-content{
+			// 	width: 686rpx;
+			// 	height: 272rpx;
+			// 	border-radius: 1rpx;
+			// }
+		}
 	}
 </style>
