@@ -3,6 +3,7 @@ package com.nft.member.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import cn.dev33.satoken.secure.SaSecureUtil;
+import com.nft.member.param.CheckVericationCodeParam;
 import com.nft.member.param.OneClickLoginParam;
 import com.nft.member.param.SettingLoginPwdParam;
 import com.tencentcloudapi.sms.v20210111.models.SendSmsResponse;
@@ -47,7 +48,18 @@ public class LoginRegisterController {
 	public Result<SendSmsResponse> sendLoginVerificationCode(String mobile) {
 		return Result.success(memberService.sendLoginVerificationCode(mobile));
 	}
-
+	@GetMapping("/sendModifyLoginPwdVerificationCode")
+	public Result<SendSmsResponse> sendModifyLoginPwdVerificationCode(String mobile) {
+		return Result.success(memberService.sendModifyLoginPwdVerificationCode(mobile));
+	}
+	@PostMapping("/eqModifyLoginPwdVerificationCode")
+	public Result<String> eqModifyLoginPwdVerificationCode(CheckVericationCodeParam param) {
+		String verificationCode = redisTemplate.opsForValue().get(Constant.短信类型_验证码_修改登录密码 + param.getMobile());
+		if (!param.getVerificationCode().equals(verificationCode)) {
+			throw new BizException("验证码不正确");
+		}
+		return Result.success();
+	}
 	@PostMapping("/login")
 	public Result<TokenInfo> login(LoginParam param, HttpServletRequest request) {
 		LoginLog loginlLog = getLoginLog(param.getMobile(), request);

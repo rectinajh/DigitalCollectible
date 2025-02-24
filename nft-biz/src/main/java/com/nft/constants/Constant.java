@@ -198,6 +198,8 @@ public class Constant {
 
 	public static final String 短信类型_验证码_修改支付密码 = "modifyPayPwd";
 
+	public static final String 短信类型_验证码_修改登录密码 = "modifyLoginPwd";
+
 	public static final String 短信类型_验证码_登录 = "login";
 
 	public static final String 会员余额变动日志类型_系统 = "1";

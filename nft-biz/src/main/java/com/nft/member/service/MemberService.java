@@ -216,7 +216,16 @@ public class MemberService {
 		Member member = memberRepo.getOne(memberId);
 		sendVerificationCode(member.getMobile(), Constant.短信类型_验证码_修改支付密码);
 	}
+	/**
+	 * 短信验证码修改支付密码
+	 * @param mobile
+	 */
+	@Lock(keys = "'sendModifyLoginPwdVerificationCode' + #memberId")
+	@Transactional
+	public SendSmsResponse sendModifyLoginPwdVerificationCode(@NotBlank String mobile) {
 
+		return sendVerificationCode(mobile, Constant.短信类型_验证码_修改登录密码);
+	}
 	/**
 	 * 短信验证码登录
 	 * @param mobile
@@ -315,7 +324,7 @@ public class MemberService {
 			double mathRandom = (Math.random() * 9 + 1) * (Math.pow(10, 5));
 			int numberCode = (int)mathRandom;
 			String code = String.valueOf(numberCode);
-			String verificationCode = Constant.短信类型_验证码_登录 + mobile;
+			String verificationCode = type + mobile;
 			redisTemplate.opsForValue().set(verificationCode, code,  5, TimeUnit.MINUTES);
 			String[] templateParamSet = {code};
 			req.setTemplateParamSet(templateParamSet);
