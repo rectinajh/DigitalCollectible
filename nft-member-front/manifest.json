@@ -2,8 +2,8 @@
     "name" : "灵境",
     "appid" : "__UNI__C33C6E0",
     "description" : "",
-    "versionName" : "0.0.3",
-    "versionCode" : "100",
+    "versionName" : "0.0.7",
+    "versionCode" : 7,
     "transformPx" : false,
     "app-plus" : {
         "optimization" : {
@@ -63,6 +63,11 @@
                 "push" : {},
                 "oauth" : {
                     "univerify" : {}
+                },
+                "payment" : {
+                    "alipay" : {
+                        "__platform__" : [ "ios", "android" ]
+                    }
                 }
             },
             "icons" : {
@@ -97,6 +102,9 @@
                     }
                 }
             }
+        },
+        "uniStatistics" : {
+            "enable" : true
         }
     },
     "quickapp" : {},
@@ -111,25 +119,40 @@
         "optimization" : {
             "subPackages" : true
         },
-        "usingComponents" : true
+        "usingComponents" : true,
+        "uniStatistics" : {
+            "enable" : true
+        }
     },
     "mp-alipay" : {
         "usingComponents" : true,
-        "component2" : true
+        "component2" : true,
+        "uniStatistics" : {
+            "enable" : true
+        }
     },
     "mp-qq" : {
         "optimization" : {
             "subPackages" : true
         },
-        "appid" : "15646153"
+        "appid" : "15646153",
+        "uniStatistics" : {
+            "enable" : true
+        }
     },
     "mp-baidu" : {
         "usingComponents" : true,
-        "appid" : ""
+        "appid" : "",
+        "uniStatistics" : {
+            "enable" : true
+        }
     },
     "mp-toutiao" : {
         "usingComponents" : true,
-        "appid" : ""
+        "appid" : "",
+        "uniStatistics" : {
+            "enable" : true
+        }
     },
     "h5" : {
         "template" : "",
@@ -146,6 +169,53 @@
         "devServer" : {
             "https" : false,
             "port" : 8084
+        },
+        "uniStatistics" : {
+            "enable" : true
+        }
+    },
+    "uniStatistics" : {
+        "version" : "2",
+        "enable" : true
+    },
+    "app-harmony" : {
+        "uniStatistics" : {
+            "enable" : true
+        }
+    },
+    "mp-harmony" : {
+        "uniStatistics" : {
+            "enable" : true
+        }
+    },
+    "mp-jd" : {
+        "uniStatistics" : {
+            "enable" : true
+        }
+    },
+    "mp-kuaishou" : {
+        "uniStatistics" : {
+            "enable" : true
+        }
+    },
+    "mp-lark" : {
+        "uniStatistics" : {
+            "enable" : true
+        }
+    },
+    "mp-xhs" : {
+        "uniStatistics" : {
+            "enable" : true
+        }
+    },
+    "quickapp-webview-huawei" : {
+        "uniStatistics" : {
+            "enable" : true
+        }
+    },
+    "quickapp-webview-union" : {
+        "uniStatistics" : {
+            "enable" : true
         }
     }
 }

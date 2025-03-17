@@ -1,0 +1,83 @@
+.page-content{
+	padding: 0 32rpx;
+	
+	.creator-info{
+		width: 686rpx;
+		height: 192rpx;
+		width: 100%;
+		border-radius: 24rpx;
+		position: relative;
+		
+		.creator-content{
+			width: 682rpx;
+			height: 188rpx;
+			border-radius: 24rpx;
+			box-sizing: border-box;
+			position: relative;
+			margin-left: 2rpx;
+			z-index: 2;
+			display: flex;
+			align-items: center;
+			padding: 0 32rpx;
+			
+			.avatar{
+				
+			}
+			.text{
+				padding-left: 32rpx;
+				.name{
+					font-size: 32rpx;
+					color: #fff;
+					white-space: nowrap;
+					overflow: hidden;
+					text-overflow: ellipsis;
+				}
+				.description{
+					font-size: 24rpx;
+					color: #999;
+					margin-top: 8rpx;
+					white-space: nowrap;
+					overflow: hidden;
+					text-overflow: ellipsis;
+				}
+			}
+		}
+		.border{
+			width: 100%;
+			height: 100%;
+			border-radius: 24rpx;
+			position: absolute;
+			z-index: 0;
+			top: 0;
+			left: 0;
+		}
+		
+	}
+	
+	.main{
+		margin-top: 48rpx;
+		.tabs{
+			display: flex;
+			.tabItem{
+				font-size: 30rpx;
+				color: #999;
+				margin-right: 64rpx;
+				padding-bottom: 16rpx;
+				border-bottom: 4rpx solid transparent;
+			}
+			.checked{
+				color: #fff;
+				border-bottom: 4rpx solid #FCE6B7;
+			}
+		}
+		.list{
+			margin-top: 24rpx;
+			.no-data {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				height: 400rpx;
+			}
+		}
+	}
+}

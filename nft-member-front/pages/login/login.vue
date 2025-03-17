@@ -12,7 +12,8 @@
 		<view class="login-page">
 			<view class="u-flex u-row-center">
 				<view class="logo">
-					<u-image width="240rpx" height="240rpx" src="/static/img/login/logo.png"></u-image>
+					<!-- <u-image width="240rpx" height="240rpx" src="/static/img/login/logo.png"></u-image> -->
+					<u-image width="240rpx" height="240rpx" src="/static/img/login/colorful.png"></u-image>
 				</view>
 			</view>
 			<view class="title">

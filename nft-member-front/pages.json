@@ -287,9 +287,8 @@
 				"h5": {
 					"titleNView": {
 						"buttons": [{
-							"fontSrc": "/static/font.ttf",
 							"text": "\ue68f 提现记录",
-							"fontSize": "13px",
+							"fontSize": "28rpx",
 							"width": "auto"
 						}]
 					}
@@ -297,9 +296,8 @@
 				"app-plus": {
 					"titleNView": {
 						"buttons": [{
-							"fontSrc": "/static/font.ttf",
 							"text": "\ue68f 提现记录",
-							"fontSize": "13px",
+							"fontSize": "28rpx",
 							"width": "auto"
 						}]
 					}
@@ -320,7 +318,7 @@
             "path" : "pages/creator/creator",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "创作者",
                 "enablePullDownRefresh": true,
 				"navigationBarBackgroundColor": "#2f2f2f",
 				"navigationBarTextStyle": "white"
@@ -348,6 +346,28 @@
 					"navigationBarTitleText" : "",
 					"navigationStyle": "custom"
 				}
+			},
+			{
+				"path" : "creator/creator",
+				"style" : 
+				{
+					"navigationBarTitleText" : "创作者",
+					"enablePullDownRefresh": true
+				}
+			},
+			{
+				"path" : "collectionExport/collectionExport",
+				"style" : 
+				{
+					"navigationBarTitleText" : ""
+				}
+			},
+			{
+				"path" : "compose/compose",
+				"style" : 
+				{
+					"navigationBarTitleText" : "合成藏品"
+				}
 			}
 				
 			]
@@ -368,9 +388,93 @@
 				{
 					"navigationBarTitleText" : ""
 				}
+			},
+			{
+				"path" : "userinfo/userinfo",
+				"style" : 
+				{
+					"navigationBarTitleText" : "个人信息"
+				}
 			}
 				
 			]
+		},
+		{
+			"name": "wallet",
+			"root": "subPackages/wallet",
+			"pages":[{
+				"path" : "myWallet/myWallet",
+				"style" : 
+				{
+					"navigationBarTitleText" : "我的钱包"
+				}
+			},
+			{
+				"path" : "withdraw/withdraw",
+				"style" : 
+				{
+					"navigationBarTitleText" : "提现",
+					"h5": {
+						"titleNView": {
+							"buttons": [{
+								"text": "\ue68f 提现记录",
+								"fontSize": "28rpx",
+								"width": "auto",
+								"color": "#cccccc"
+							}]
+						}
+					},
+					"app-plus": {
+						"titleNView": {
+							"buttons": [{
+								"text": "\ue68f 提现记录",
+								"fontSize": "28rpx",
+								"width": "auto",
+								"color": "#cccccc"
+							}]
+						}
+					}
+				}
+			},
+			{
+				"path" : "account/account",
+				"style" : 
+				{
+					"navigationBarTitleText" : "我的账户"
+				}
+			},
+			{
+				"path" : "addAccount/addAccount",
+				"style" : 
+				{
+					"navigationBarTitleText" : "添加账户"
+				}
+			}]
+		},
+		{
+			"name": "mine",
+			"root": "subPackages/mine",
+			"pages":[{
+				"path" : "giveRecord/giveRecord",
+				"style" : 
+				{
+					"navigationBarTitleText" : "转赠记录"
+				}
+			},
+			{
+				"path" : "order/order",
+				"style" : 
+				{
+					"navigationBarTitleText" : "我的订单"
+				}
+			},
+			{
+				"path" : "orderDetail/orderDetail",
+				"style" : 
+				{
+					"navigationBarTitleText" : ""
+				}
+			}]
 		}
 	],
 	"globalStyle": {
@@ -385,8 +489,8 @@
 		"selectedColor": "#FFFFFF",
 		"backgroundColor": "rgba(0, 0, 0, 0.8)",
 		"borderStyle": "black",
-		"fontSize": "18rpx",
-		"spacing": "10rpx",
+		"fontSize": "9px",
+		"spacing": "5px",
 		"list": [{
 				"pagePath": "pages/home/home",
 				"iconPath": "/static/img/tabbar/home1.png",

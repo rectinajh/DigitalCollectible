@@ -39,6 +39,7 @@ const install = (Vue, vm) => {
 	}
 	// 响应拦截，判断状态码是否通过
 	Vue.prototype.$u.http.interceptor.response = (res) => {
+		
 		// 如果把originalData设置为了true，这里得到将会是服务器返回的所有的原始数据
 		// 判断可能变成了res.statueCode，或者res.data.code之类的，请打印查看结果
 		if (res.data.code == 200) {
@@ -54,13 +55,14 @@ const install = (Vue, vm) => {
 				store.dispatch('logout');
 				uni.showToast({
 					title: '请重新登录',
-					icon: 'none'
+					icon: 'none',
+					duration: 1500
 				});
 				setTimeout(() => {
 					uni.reLaunch({
-						url: "../login/login"
+						url: "/pages/login/login"
 					});
-				}, 2000);
+				}, 1500);
 			}
 			return false;
 		}

@@ -2,13 +2,19 @@
 	<view class="list">
 		<view class="secList left">
 			<view class="item" v-for="(item,index) in leftList" :key="index">
-				<waterfall-item :item="item"></waterfall-item>
+				<slot name="leftItem">
+					<market-item v-if="isMarket" :item="item" @itemClick="latestCollectionDetailPage"></market-item>
+					<waterfall-item v-else :item="item" @itemClick="latestCollectionDetailPage"></waterfall-item>
+				</slot>
 			</view>
 		</view>
 		
 		<view class="secList right">
 			<view class="item" v-for="(item,index) in rightList" :key="index">
-				<waterfall-item :item="item"></waterfall-item>
+				<slot name="rightItem">
+					<market-item v-if="isMarket" :item="item" @itemClick="latestCollectionDetailPage"></market-item>
+					<waterfall-item v-else :item="item" @itemClick="latestCollectionDetailPage"></waterfall-item>
+				</slot>
 			</view>
 		</view>
 	</view>
@@ -16,16 +22,22 @@
 
 <script>
 	import waterfallItem from "@/components/waterfall-item/waterfall-item.vue"
+	import marketItem from "@/components/market-item/market-item.vue"
 	export default {
 		name:"waterfall-list",
 		props:{
 			list:{
 				type:Array,
 				default:[]
+			},
+			isMarket:{
+				type:Boolean,
+				default:false
 			}
 		},
 		components:{
 			waterfallItem,
+			marketItem,
 		},
 		data() {
 			return {
@@ -48,6 +60,11 @@
 				}
 			}
 		},
+		methods:{
+			latestCollectionDetailPage(id) {
+				this.$emit('itemClick',id)
+			},
+		}
 	}
 </script>
 

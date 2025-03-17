@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import App from './App';
 import Vuex from "vuex";
+import common from "@/common/js/public.js"
 
 Vue.config.productionTip = false;
 
@@ -20,6 +21,8 @@ Vue.mixin(vuexStore);
 // 引入uView对小程序分享的mixin封装
 let mpShare = require('uview-ui/libs/mixin/mpShare.js');
 Vue.mixin(mpShare);
+
+Vue.prototype.common=common;
 
 
 

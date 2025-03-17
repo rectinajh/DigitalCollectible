@@ -1,0 +1,166 @@
+.page-content{
+	padding: 0 24rpx;
+	
+	.top{
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		.title{
+			display: flex;
+			align-items: center;
+			.icon{
+				
+			}
+			.status{
+				margin-left: 16rpx;
+				font-size: 40rpx;
+			}
+			.wait{
+				color: #FF7366;
+			}
+			.complete{
+				color: #22D86E;
+			}
+			.cancel{
+				color: #999999;
+			}
+		}
+		.handleWait{
+			margin-top: 40rpx;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			.text{
+				display: flex;
+				align-items: center;
+				.amount{}
+				.countdown{
+					margin-left: 40rpx;
+				}
+			}
+			.btn{
+				background-color: #FCE6B7;
+				border-radius: 38rpx;
+				width: 200rpx;
+				height: 56rpx;
+				color: #644205;
+				font-size: 24rpx;
+				line-height: 56rpx;
+				text-align: center;
+				margin-top: 40rpx;
+			}
+		}
+	}
+	
+	.info{
+		padding: 24rpx;
+		background-color: #212121;
+		border-radius: 24rpx;
+		margin-top: 40rpx;
+		
+		.creator{
+			display: flex;
+			align-items: center;
+			border-bottom: 1rpx solid #FFFFFF14;
+			padding-bottom: 24rpx;
+			
+			.arrow{
+				margin-left: 16rpx;
+			}
+		}
+		.collection{
+			display: flex;
+			align-items: center;
+			margin-top: 24rpx;
+			
+			.left{
+				
+			}
+			.right{
+				margin-left: 24rpx;
+				.name{
+					font-size: 30rpx;
+				}
+				.count{
+					color: #999;
+					font-size: 24rpx;
+					margin-top: 8rpx;
+				}
+				.price{
+					font-size: 28rpx;
+					margin-top: 22rpx;
+				}
+			}
+		}
+	}
+	
+	.order{
+		border-radius: 24rpx;
+		background-color: #212121;
+		padding: 32rpx 24rpx;
+		margin-top: 16rpx;
+		.item{
+			display: flex;
+			align-items: center;
+			font-size: 24rpx;
+			.label{
+				color: #999;
+			}
+			.value{
+				margin-left: 8rpx;
+			}
+		}
+		.space{
+			margin-bottom: 24rpx;
+		}
+	}
+	
+	.fixed-bottom{
+		position: fixed;
+		bottom: 12rpx;
+		left: 0;
+		width: 100%;
+		
+		.btnGroup{
+			display: flex;
+			align-items: center;
+			justify-content: space-around;
+			.btn{
+				width: 336rpx;
+				height: 88rpx;
+				border-radius: 60rpx;
+				line-height: 88rpx;
+				text-align: center;
+				font-size: 32rpx;
+			}
+			.cancel{
+				border: 1rpx solid #FFFFFF33
+			}
+			.pay{
+				background-color: #FCE6B7;
+				color: #644205;
+			}
+		}
+	}
+	
+	.pay-modal{
+		background-color: #212121;
+		padding: 32rpx;
+		
+		.amount{
+			font-size: 30rpx;
+		}
+		.custom-pay-modal-btn{
+			width: 100%;
+			height: 88rpx;
+			border-radius: 60rpx;
+			background-color: #FCE6B7;
+			color: #644205;
+			font-size: 32rpx;
+			line-height: 88rpx;
+			text-align: center;
+		}
+	}
+}

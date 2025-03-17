@@ -1,28 +1,29 @@
 <template>
 	<view>
 		<u-modal v-model="exchangeResultFlag" :show-title="false" :show-cancel-button="false" confirm-text="我知道了"
-			@confirm="toMyPage">
+			backgroundColor="#181819" confirm-color="#FCE6B7" @confirm="toMyPage">
 			<view class="slot-content">
 				<view class="mystery-box-result-content">
 					<view class="mystery-box-result-title">恭喜获得</view>
-					<view class="mystery-box-result-name">{{exchangeResult.name}}</view>
-					<image style="width: 200rpx; height: 200rpx;" :src="exchangeResult.cover">
-					</image>
+					<view class="mystery-box-result-name">{{exchangeResult.name}}</view> 
+					<u-image width="200" height="200" :src="exchangeResult.cover" mode="aspectFill">
+					</u-image>
 				</view>
 			</view>
 		</u-modal>
 		<view class="friend-account-tip">
-			请输入空投码:
+			请输入空投码
 		</view>
-		<view class="account-textarea">
-			<textarea class="account-textarea-inner" placeholder="请输入空投码" v-model="code"></textarea>
+		<view class="account-textarea" @click="textFocus=true">
+			<textarea class="account-textarea-inner" ref="myTextarea" :auto-height="true" :focus="textFocus"
+			@blur="textFocus=false" v-model="code"></textarea>
 		</view>
-		<view class="action-btn">
-			<u-button type="primary" @click="exchange">立即兑换</u-button>
+		<view class="action-btn" @click="exchange">
+			立即兑换
 		</view>
 
 		<view class="give-explain">
-			<view class="give-explain-title">规则说明</view>
+			<view class="give-explain-title">规则说明:</view>
 			<view class="give-explain-items">
 				<view class="give-explain-item">
 					1、一个空投码仅可使用一次，兑换码使用后即无效；
@@ -46,6 +47,7 @@
 				code: '',
 				exchangeResultFlag: false,
 				exchangeResult: '',
+				textFocus:true,
 			}
 		},
 		onLoad(option) {},
@@ -84,6 +86,9 @@
 		text-align: center;
 		padding-top: 20px;
 		padding-bottom: 20px;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
 	}
 	
 	.mystery-box-result-name {
@@ -143,45 +148,60 @@
 
 	.give-explain {
 		padding-left: 32rpx;
-		padding-top: 32rpx;
+		padding-top: 48rpx;
 		padding-right: 32rpx;
 	}
 
 	.give-explain-title {
 		line-height: 2;
+		color: #ccc;
+		font-size: 26rpx;
 	}
 
 	.give-explain-items {
 		font-size: smaller;
-		color: #888;
+		color: #666666;
+		font-size: 24rpx;
+		line-height: 36rpx;
 	}
 
-	.give-explain-item {}
+	.give-explain-item {
+		margin-top: 8rpx;
+	}
 
 	.action-btn {
-		padding-left: 32rpx;
-		padding-right: 32rpx;
-		padding-top: 20rpx;
+		width: 686rpx;
+		margin-left: 32rpx;
+		height: 88rpx;
+		background-color: #FCE6B7;
+		color: #644205;
+		font-size: 32rpx;
+		line-height: 88rpx;
+		text-align: center;
+		border-radius: 60rpx;
+		margin-top: 46rpx;
 	}
 
 	.friend-account-tip {
-		padding-top: 64rpx;
-		padding-left: 23rpx;
-		padding-bottom: 20rpx;
+		padding-top: 78rpx;
+		padding-bottom: 40rpx;
+		width: 100%;
+		text-align: center;
+		font-size: 32rpx;
 	}
 
 	.account-textarea-inner {
-		padding-top: 32rpx;
+		width: 100%;
+		font-size: 28rpx;
 	}
 
 	.account-textarea {
-		background: #e7e7e7;
-		padding-left: 32rpx;
-		padding-right: 32rpx;
+		background: #212121;
 		margin-left: 32rpx;
 		margin-right: 32rpx;
-		border-radius: 20rpx;
-		height: 260rpx;
+		padding: 96rpx 120rpx;
+		border-radius: 24rpx;
+		min-height: 280rpx;
 	}
 
 	.sub-title {

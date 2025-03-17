@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view style="padding: 0 32rpx;">
 		<view class="no-data" v-show="noDataFlag">
 			<u-empty text="暂无记录" mode="list"></u-empty>
 		</view>
@@ -34,7 +34,6 @@
 						</view>
 					</view>
 				</view>
-				<u-line></u-line>
 			</template>
 			<view @click="nextPage" v-show="!noDataFlag">
 				<u-loadmore margin-top="40" margin-bottom="40" :status="loadingState"></u-loadmore>
@@ -120,7 +119,7 @@
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
 	.no-data {
 		display: flex;
 		align-items: center;
@@ -133,10 +132,9 @@
 	}
 
 	.record {
-		padding-left: 32rpx;
-		padding-right: 32rpx;
 		padding-top: 20rpx;
 		padding-bottom: 20rpx;
+		border-bottom: 1rpx solid #FFFFFF14;
 	}
 
 	.record-item {
@@ -148,10 +146,12 @@
 	}
 
 	.record-item-l {
-		color: #909399;
+		
 	}
 
-	.record-item-r {}
+	.record-item-r {
+		color: #999999;
+	}
 
 	.record-item-r-red {
 		color: #e64340;

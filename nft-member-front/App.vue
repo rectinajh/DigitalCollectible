@@ -1,7 +1,11 @@
 <script>
 	export default {
-		globalData: {},
+		globalData: {
+			platform:''
+		},
 		onLaunch() {
+			let systemInfo = uni.getSystemInfoSync()
+			this.platform=systemInfo.platform
 		},
 		onShow() {
 			// #ifdef APP-PLUS
@@ -33,6 +37,14 @@
 	@font-face {
 		font-family: OPPOSans-L;
 		src: url('@/static/fonts/OPPOSans-L.ttf');
+	}
+	@font-face {
+		font-family: OPPOSans-H;
+		src: url('@/static/fonts/OPPOSans-H.ttf');
+	}
+	@font-face {
+		font-family: ZiHunBianTaoTi;
+		src: url('@/static/fonts/ZiHunBianTaoTi-2.ttf');
 	}
 	page{
 		background-color: #0C0C0D;

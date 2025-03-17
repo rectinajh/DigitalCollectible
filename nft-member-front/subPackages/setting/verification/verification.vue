@@ -46,14 +46,14 @@ import userInfo from '../../../store/modules/userInfo';
 			else{
 				uni.navigateBack()
 			}
-			if(options.mobile){
-				this.mobile = options.mobile
-			}
+			// if(options.mobile){
+			// 	this.mobile = options.mobile
+			// }
 		},
 		mounted() {
 			this.initCountdown()
-			if(userInfo.mobile){
-				this.mobile = userInfo.mobile
+			if(this.userInfo.mobile){
+				this.mobile = this.userInfo.mobile
 			}
 		},
 		computed:{

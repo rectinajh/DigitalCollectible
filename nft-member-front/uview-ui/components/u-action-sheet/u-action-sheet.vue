@@ -1,26 +1,30 @@
 <template>
 	<u-popup mode="bottom" :border-radius="borderRadius" :popup="false" v-model="value" :maskCloseAble="maskCloseAble"
 	    length="auto" :safeAreaInsetBottom="safeAreaInsetBottom" @close="popupClose" :z-index="uZIndex">
-		<view class="u-tips u-border-bottom" v-if="tips.text" :style="[tipsStyle]">
-			{{tips.text}}
-		</view>
-		<block v-for="(item, index) in list" :key="index">
-			<view 
-				@touchmove.stop.prevent 
-				@tap="itemClick(index)" 
-				:style="[itemStyle(index)]" 
-				class="u-action-sheet-item u-line-1" 
-				:class="[index < list.length - 1 ? 'u-border-bottom' : '']"
-				:hover-stay-time="150"
-			>
-				<text>{{item.text}}</text>
-				<text class="u-action-sheet-item__subtext u-line-1" v-if="item.subText">{{item.subText}}</text>
+		<view :style="{backgroundColor: bgColor}">
+			<view class="u-tips u-border-bottom" v-if="tips.text" :style="[tipsStyle]">
+				{{tips.text}}
 			</view>
-		</block>
-		<view class="u-gab" v-if="cancelBtn">
+			<block v-for="(item, index) in list" :key="index">
+				<view 
+					@touchmove.stop.prevent 
+					@tap="itemClick(index)" 
+					:style="[itemStyle(index)]" 
+					class="u-action-sheet-item u-line-1"
+					:hover-stay-time="150"
+				>
+					<text>{{item.text}}</text>
+					<text class="u-action-sheet-item__subtext u-line-1" :style="{color:actionColor}" v-if="item.subText">
+						{{item.subText}}
+					</text>
+				</view>
+			</block>
+			<view class="u-gab" :style="{backgroundColor: gabColor}" v-if="cancelBtn">
+			</view>
+			<view @touchmove.stop.prevent class="u-actionsheet-cancel u-action-sheet-item" hover-class="u-hover-class"
+				:style="{color: cancelColor}"
+			    :hover-stay-time="150" v-if="cancelBtn" @tap="close">{{cancelText}}</view>
 		</view>
-		<view @touchmove.stop.prevent class="u-actionsheet-cancel u-action-sheet-item" hover-class="u-hover-class"
-		    :hover-stay-time="150" v-if="cancelBtn" @tap="close">{{cancelText}}</view>
 	</u-popup>
 </template>
 
@@ -103,6 +107,21 @@
 			cancelText: {
 				type: String,
 				default: '取消'
+			},
+			bgColor:{
+				type:String,
+				default:'#fff'
+			},
+			gabColor:{
+				type:String,
+				default:'#eaeaec'
+			},
+			cancelColor:{
+				type:String,
+				default:'#eaeaec'
+			},
+			border:{
+				type:String,
 			}
 		},
 		computed: {
@@ -121,6 +140,8 @@
 					if (this.list[index].fontSize) style.fontSize = this.list[index].fontSize + 'rpx';
 					// 选项被禁用的样式
 					if (this.list[index].disabled) style.color = '#c0c4cc';
+					if (this.list[index].borderBottom) style.borderBottom =  this.list[index].borderBottom;
+					if (this.list[index].padding) style.padding =  this.list[index].padding;
 					return style;
 				}
 			},
@@ -180,7 +201,7 @@
 	}
 
 	.u-gab {
-		height: 12rpx;
+		height: 16rpx;
 		background-color: rgb(234, 234, 236);
 	}
 

@@ -1,0 +1,173 @@
+.content{
+	padding: 0 32rpx;
+	
+	.header{
+		.mainCollection{
+			margin: 34rpx;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+			.cover{
+				position: relative;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				.border{}
+				.cover{
+					position: absolute;
+				}
+			}
+			.name{
+				font-size: 36rpx;
+				color: #FCE6B7;
+				margin-top: 32rpx;
+			}
+			.tips{
+				font-size: 24rpx;
+				color: #999999;
+				margin-top: 8rpx;
+			}
+		}
+	}
+	
+	.secCollections{
+		margin-top: 56rpx;
+		.item{
+			width:686rpx;
+			height: 248rpx;
+			position: relative;
+			margin-top: 24rpx;
+			
+			.bg{}
+			
+			.main{
+				position: absolute;
+				left: 0;
+				top: 0;
+				width:686rpx;
+				height: 248rpx;
+				padding: 24rpx;
+				
+				.title{}
+				.imgGroup{
+					margin-top: 20rpx;
+					display: flex;
+					align-items: center;
+					// justify-content: center;
+					.img{
+						position: relative;
+						width: 140rpx;
+						height: 140rpx;
+						
+						.mask{
+							position: absolute;
+							width: 140rpx;
+							height: 140rpx;
+							border-radius: 12rpx;
+							background: #00000066;
+							z-index: 3;
+							display: flex;
+							align-items: center;
+							justify-content: center;
+						}
+						.check{
+							position: absolute;
+							width: 140rpx;
+							height: 140rpx;
+							.icon{
+								position: absolute;
+								z-index: 3;
+								right: -8rpx;
+								top: -8rpx;
+							}
+							
+						}
+					}
+				}
+			}
+			
+			.mission{
+				position: absolute;
+				right: 22rpx;
+				top: 4rpx;
+				color: #FCE6B7;
+				font-size: 30rpx;
+			}
+		}
+	}
+	
+	.fixed-bottom{
+		position: fixed;
+		bottom: 12rpx; 
+		width: 100%;
+		display: flex;
+		align-items: center;
+		.market{}
+		.compose-btn{
+			width: 574rpx;
+			height: 88rpx;
+			background-color: #FCE6B7;
+			border-radius: 60rpx;
+			color: #644205;
+			font-size: 32rpx;
+			line-height: 88rpx;
+			text-align: center;
+			margin-left: 48rpx;
+		}
+	}
+	
+	.compose-require{
+		
+	}
+	
+	.common-modal{
+		background-color: #181819;
+		padding: 32rpx;
+		.modal-title{
+			display: flex;
+			justify-content: space-between;
+			
+			.modal-title-txt{
+				
+			}
+		}
+		.select-material-name{
+			padding: 32rpx 0;
+		}
+		.optional-material{
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 20rpx 0;
+			border-bottom: 1rpx solid #FFFFFF14;
+			
+			.optional-material-id{}
+		}
+		.confirmBtn{
+			width: 100%;
+			height: 88rpx;
+			line-height: 88rpx;
+			text-align: center;
+			background-color: #FCE6B7;
+			border-radius: 60rpx;
+			color: #644205;
+			font-size: 32rpx;
+		}
+	}
+	
+	.slot-content{
+		padding: 24rpx;
+		.compose-result-content {
+			text-align: center;
+			padding-top: 20px;
+			padding-bottom: 20px;
+		}
+		.compose-result-title{
+			margin-top: 16rpx;
+		}
+		.compose-result-name{
+			margin: 16rpx 0;
+		}
+	}
+}

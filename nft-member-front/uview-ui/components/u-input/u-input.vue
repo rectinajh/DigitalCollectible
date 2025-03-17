@@ -130,7 +130,7 @@ export default {
 			default: 140
 		},
 		placeholderStyle: {
-			type: String,
+			type: [String,Object],
 			default: 'color: #c0c4cc;'
 		},
 		confirmType: {

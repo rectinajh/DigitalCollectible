@@ -4,8 +4,9 @@
 			<view class="search-modal-content">
 				<view class="top-search">
 					<view class="top-search-l">
-						<u-search placeholder="请输入您想查找的内容" :show-action="false" v-model="keyword2"
-							@search="showSearchResult" @clear="clearSearchResult"></u-search>
+						<u-search placeholder="请输入您想查找的内容" bgColor="#242425" placeholderColor="#666666" color="#fff"
+						:show-action="false" v-model="keyword2" :focus="showSearchModalFlag"
+						@search="showSearchResult" @clear="clearSearchResult"></u-search>
 					</view>
 					<view class="top-search-r">
 						<text class="top-search-r-cancel" @click="showSearchModalFlag = false;">取消</text>
@@ -40,7 +41,7 @@
 			<view class="filter-modal-content">
 				<view class="category-title">
 					<view class="category-title-l">
-						<u-icon name="grid"></u-icon>
+						<u-icon color="#FCE6B7" name="grid"></u-icon>
 					</view>
 					<view class="category-title-r">品牌</view>
 				</view>
@@ -56,7 +57,7 @@
 				<view v-show="collectionDicts.length > 0">
 					<view class="category-title">
 						<view class="category-title-l">
-							<u-icon name="photo"></u-icon>
+							<u-icon color="#FCE6B7" name="photo"></u-icon>
 						</view>
 						<view class="category-title-r">作品</view>
 					</view>
@@ -81,19 +82,19 @@
 		<view class="sticky" :class="{'sticky-fixed':stickyFixedFlag}">
 			<view class="top-search">
 				<view class="top-search-l">
-					<u-search placeholder="请输入您想查找的内容" :show-action="false" v-model="keyword"
-						@focus="showSearchModalFlag = true;"></u-search>
+					<u-search placeholder="请输入您想查找的内容" bgColor="#242425" placeholderColor="#666666" color="#fff"
+					 :show-action="false" v-model="keyword" @focus="showSearchModalFlag = true;"></u-search>
 				</view>
 				<view class="top-search-r">
 					<u-icon class="filter-icon" name="hourglass" size="36"
-						:color="getSelectedDictFlag() ? '#007aff' : '#888'" @click="showFilterModalFlag = true;">
+						:color="getSelectedDictFlag() ? '#FCE6B7' : '#c3c3c3'" @click="showFilterModalFlag = true;">
 					</u-icon>
 				</view>
 			</view>
 			<view class="query-cond-content">
 				<view class="query-cond-content-l">
-					<u-dropdown ref="marketDropdown">
-						<u-dropdown-item v-model="commodityType" :title="showCommodityTypeLabel()"
+					<u-dropdown ref="marketDropdown" inactive-color="#c3c3c3" active-color="#FCE6B7" border-radius="20">
+						<u-dropdown-item v-model="commodityType" :title="showCommodityTypeLabel()" bgColor="#212121"
 							:options="commodityTypeOptions" @change="refreshData"></u-dropdown-item>
 					</u-dropdown>
 				</view>
@@ -116,23 +117,7 @@
 		<view class="no-data" v-show="noDataFlag">
 			<u-empty text="暂无数据" mode="favor"></u-empty>
 		</view>
-		<u-row gutter="8">
-			<u-col span="6" v-for="collection in resaleCollections">
-				<view class="collection" @click="resaleCollectionDetailPage(collection.id)">
-					<view class="collection-content" @click="">
-						<image class="collection-cover" style="height: 280rpx; width: 100%;"
-							:src="collection.collectionCover">
-						</image>
-						<view class="collection-name u-line-1">{{collection.collectionName}}</view>
-						<view class="collection-num">
-							<view class="collection-num-l">
-								#{{collection.collectionSerialNumber}}/{{collection.quantity}}</view>
-							<view class="resale-price">￥{{collection.resalePrice}}</view>
-						</view>
-					</view>
-				</view>
-			</u-col>
-		</u-row>
+		<waterfall-list :isMarket="true" :list="resaleCollections" @itemClick="resaleCollectionDetailPage"></waterfall-list>
 		<view @click="nextPage" v-show="!noDataFlag">
 			<u-loadmore margin-top="40" margin-bottom="40" :status="loadingState" />
 		</view>
@@ -140,6 +125,7 @@
 </template>
 
 <script>
+	import waterfallList from "@/components/waterfall-list/waterfall-list.vue"
 	export default {
 		data() {
 			return {
@@ -174,6 +160,9 @@
 				showSearchResultFlag: false,
 				searchKeywordDict: '',
 			}
+		},
+		components:{
+			waterfallList,
 		},
 		onLoad() {
 			this.findPublishedBrandAndCollectionDict();
@@ -304,8 +293,12 @@
 
 			resaleCollectionDetailPage(id) {
 				uni.navigateTo({
-					url: '../resaleCollectionDetail/resaleCollectionDetail?id=' + id
+					url: `/subPackages/collection/collectionDetail/collectionDetail?id=${id}&type=market`
 				});
+				
+				// uni.navigateTo({
+				// 	url: `/pages/resaleCollectionDetail/resaleCollectionDetail?id=${id}&type=market`
+				// });
 			},
 
 			refreshData() {
@@ -375,7 +368,7 @@
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
 	::v-deep .u-dropdown__content {
 		min-width: 200rpx;
 	}
@@ -401,7 +394,7 @@
 
 	.hot-word-title {
 		line-height: 3;
-		color: #097fff;
+		color: #FCE6B7;
 	}
 
 	.hot-word-items {}
@@ -413,7 +406,7 @@
 		margin-bottom: 8rpx;
 		margin-top: 8rpx;
 		background: #e8e8e8;
-		color: #888;
+		color: #666666;
 		font-size: small;
 		padding-left: 12rpx;
 		padding-right: 12rpx;
@@ -424,14 +417,20 @@
 		padding-right: 32rpx;
 		padding-top: 16rpx;
 		padding-bottom: 16rpx;
+		background-color: #0C0C0D;
 	}
 
 	.fixed-bottom {
-		position: fixed;
-		bottom: 0rpx;
+		position: absolute;
+		z-index: 999;
+		/* #ifndef H5 */
+		bottom: var(--window-bottom);
+		/* #endif */
+		/* #ifdef H5 */
+		bottom: 0;
+		/* #endif */
 		left: 0rpx;
 		width: 100%;
-		background: #ffffff;
 	}
 
 	.fixed-bottom-content {
@@ -448,8 +447,8 @@
 	}
 
 	.confirm-filter-btn {
-		background: linear-gradient(to right, #2979ff, #909399);
-		color: white;
+		background-color: #FCE6B7;
+		color: #644205;
 		height: 80rpx;
 		line-height: 80rpx;
 		flex: 1;
@@ -482,7 +481,7 @@
 
 	.category-item {
 		background: #e8e8e8;
-		color: #888;
+		color: #666666;
 		text-align: center;
 		margin-bottom: 12rpx;
 		margin-top: 12rpx;
@@ -491,8 +490,8 @@
 	}
 
 	.category-item-active {
-		background: #007aff;
-		color: white;
+		background: #FCE6B7;
+		color: #644205;
 	}
 
 	.filter-modal-close {
@@ -513,10 +512,14 @@
 
 	.filter-modal-content {
 		padding-top: 64rpx;
+		height: 100%;
+		background-color: #212121;
+		z-index: 999;
+		position: relative;
 	}
 
 	.sticky {
-		background-color: #ffffff;
+		// background-color: #ffffff;
 	}
 
 	.sticky-fixed {
@@ -533,7 +536,7 @@
 	}
 
 	.top-search-r {
-		padding-left: 16rpx;
+		padding: 16rpx;
 	}
 
 	.filter-icon {}
@@ -564,56 +567,14 @@
 	}
 
 	.query-cond-content-r-item-active {
-		background: #007aff;
-		color: white;
+		background: #FCE6B7;
+		color: #644205;
 	}
 
 	.page-content {
 		padding-left: 32rpx;
 		padding-right: 32rpx;
 		padding-bottom: 140rpx;
-	}
-
-
-	.collection {
-		padding-bottom: 10rpx;
-	}
-
-	.collection-content {
-		background: #e7e7e7;
-		border-radius: 20rpx;
-		padding-bottom: 20rpx;
-	}
-
-	.collection-cover {
-		border-radius: 20rpx 20rpx 0rpx 0rpx;
-	}
-
-	.collection-name {
-		font-size: smaller;
-		padding-left: 16rpx;
-		color: #060606;
-		font-weight: bold;
-	}
-
-	.resale-price {
-		font-weight: bold;
-		color: #ff9900;
-		font-size: larger;
-	}
-
-	.collection-num {
-		padding-left: 16rpx;
-		padding-top: 8rpx;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding-right: 16rpx;
-	}
-
-	.collection-num-l {
-		font-size: smaller;
-		color: #888;
 	}
 
 	.no-data {

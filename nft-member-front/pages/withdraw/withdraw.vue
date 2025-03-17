@@ -12,6 +12,9 @@
 					</view>
 				</view>
 			</u-form>
+			<view class="top">
+				
+			</view>
 
 			<view class="settlement-account-form">
 				<view class="settlement-account-title">
@@ -66,7 +69,9 @@
 				<view class="actual-amount-l">到账金额</view>
 				<view class="actual-amount-r">{{actualAmount}} CNY</view>
 			</view>
-			<u-button type="primary" @click="withdraw">申请提现</u-button>
+			<view class="btn" @click="withdraw">
+				申请提现
+			</view>
 		</view>
 	</view>
 </template>
@@ -202,6 +207,17 @@
 		color: #fff !important;
 		background-color: #2979ff !important;
 		border-color: #2979ff !important;
+	}
+	
+	.btn{
+		width: 100%;
+		height: 88rpx;
+		line-height: 88rpx;
+		border-radius: 60rpx;
+		background-color: #FCE6B7;
+		color: #644205;
+		font-size: 32rpx;
+		text-align: center;
 	}
 
 	.payment-received-info {

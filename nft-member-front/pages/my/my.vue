@@ -1,92 +1,96 @@
 <template>
 	<view class="page-content">
+		<status-bar></status-bar>
 		<view class="top-content">
+			
+			<view class="toolBar">
+				<view class="setting"  @click="common.toPage('/pages/msg/msg')">
+					<u-image src="/static/img/home/msg.png" width="40" height="40"></u-image>
+				</view>
+				<view class="setting" @click="gotoPage('/pages/setting/setting')">
+					<u-image src="/static/img/common/setting.png" width="40" height="40"></u-image>
+				</view>
+			</view>
+			
 			<view class="avatar-nick-name">
 				<view class="member-avatar">
-					<u-image height="80rpx" width="80rpx" :src="getAvatar()" shape="circle"></u-image>
+					<u-image height="112rpx" width="112rpx" :src="getAvatar()" mode="aspectFill" shape="circle"></u-image>
 				</view>
 				<view class="nick-name-mobile">
 					<view v-show="isLogin()">
 						<view class="member-nick-name">{{personalInfo.nickName}}</view>
-						<view class="member-mobile">{{personalInfo.mobile}}</view>
+						<view class="block-chain-addr" v-show="isLogin()">
+							<view class="left">区块链地址：{{getBlockChainAddr()}}</view>
+							<view v-show="personalInfo.blockChainAddr" class="right">
+								<u-image height="32rpx" width="32rpx" src="/static/img/common/copy.png"
+									@click="copyData(personalInfo.blockChainAddr)"></u-image>
+							</view>
+						</view>
+						<!-- <view class="member-mobile">{{personalInfo.mobile}}</view> -->
 					</view>
 					<view class="login" v-show="!isLogin()" @click="loginPage">
 						<view class="login-t">登录/注册</view>
 						<view class="login-b">点击登录 享受更多精彩内容</view>
 					</view>
 				</view>
-				<view class="setting" @click="gotoPage('../setting/setting')">
-					<u-icon name="setting" size="48"></u-icon>
-				</view>
 			</view>
-			<view class="block-chain-addr" v-show="isLogin()"><text
-					class="block-chain-addr-l">区块链地址：{{getBlockChainAddr()}}</text>
-				<u-image height="32rpx" width="32rpx" src="/static/img/copy_my.png" v-show="personalInfo.blockChainAddr"
-					@click="copyData(personalInfo.blockChainAddr)"></u-image>
-			</view>
-			<view class="grid-navs">
-				<view class="grid-nav" @click="gotoPage('../balanceChangeLog/balanceChangeLog')">
-					<u-icon name="rmb-circle" size="48"></u-icon>
-					<view>我的钱包</view>
-				</view>
-				<view class="grid-nav" @click="gotoPage('../payOrder/payOrder')">
-					<u-icon name="order" size="48"></u-icon>
-					<view>我的订单</view>
-				</view>
-				<view class="grid-nav" @click="gotoPage('../myGiveRecord/myGiveRecord')">
-					<u-icon name="zhuanfa" size="48"></u-icon>
-					<view>转赠记录</view>
-				</view>
-				<view class="grid-nav" @click="gotoPage('../msg/msg')">
-					<view class="msg-read" :class="{'msg-unread-num' : unreadMsgIds.length > 0}">
-					</view>
-					<u-icon name="chat" size="48">
-					</u-icon>
-					<view>消息通知
+			
+			<view class="menu">
+				<view class="chainMenu">
+					<view class="item" v-for="(item,index) in chainMenuList" :key="index" @click="gotoPage(item.value)">
+						<view class="icon">
+							<u-image :src="item.icon" width="80" height="80"></u-image>
+						</view>
+						<view class="name">
+							{{item.name}}
+						</view>
 					</view>
 				</view>
-			</view>
-			<view class="grid-navs">
-				<view class="grid-nav" @click="gotoPage('../invite/invite')">
-					<u-icon name="man-add" size="48"></u-icon>
-					<view>邀请好友</view>
-				</view>
-				<view class="grid-nav" @click="gotoPage('../composeActivity/composeActivity')">
-					<u-icon name="bag" size="48"></u-icon>
-					<view>合成藏品</view>
-				</view>
-				<view class="grid-nav" @click="gotoPage('../exchangeCode/exchangeCode')">
-					<u-icon name="gift" size="48">
-					</u-icon>
-					<view>空投兑换</view>
-				</view>
-				<view class="grid-nav" @click="contactCustomerService">
-					<u-icon name="kefu-ermai" size="48"></u-icon>
-					<view>联系客服</view>
+				
+				<view class="serviceMenu">
+					<view class="title">
+						我的服务
+					</view>
+					<view class="list">
+						<view class="item" v-for="(item,index) in serviceMenuList" :key="index" @click="gotoPage(item.value)">
+							<view class="icon">
+								<u-image :src="item.icon" width="48" height="48"></u-image>
+							</view>
+							<view class="name">
+								{{item.name}}
+							</view>
+						</view>
+					</view>
 				</view>
 			</view>
+			
 		</view>
-		<view>
+		<view class="content">
 			<view class="custom-tabs">
 				<view class="custom-tabs-l">
-					<u-tabs :list="tabs" :is-scroll="false" :current="currentTab" @change="switchTab"></u-tabs>
+					<!-- <u-tabs :list="tabs" :is-scroll="false" active-color="#FCE6B7" inactive-color="#999999" bg-color="rgba(0,0,0,0)"
+					:current="currentTab" @change="switchTab"></u-tabs> -->
+					
+					<view class="tab" v-for="(item,index) in tabs" :class="{check:currentTab==index}"
+					@click="switchTab(index)">
+						{{item.name}}
+					</view>
 				</view>
 			</view>
-			<view>
+			<view class="list">
 				<view class="no-data" v-show="noDataFlag">
-					<u-empty text="暂无数据" mode="favor"></u-empty>
+					<u-empty text="暂无数据"color="#fff" icon-size="240" 
+					src="/static/img/common/default/noData.png"></u-empty>
 				</view>
 				<view class="custom-tab-content">
 					<view v-show="currentTab == 0">
 						<u-row gutter="8">
 							<u-col span="6" v-for="collection in collections">
-								<view class="collection">
+								<view class="holdCollection">
 									<view class="collection-content" @click="holdCollectionDetailPage(collection.id)">
-										<image class="collection-cover" style="height: 280rpx; width: 100%;"
-											:src="collection.collectionCover">
-										</image>
+										<u-image width="322" height="322" mode="aspectFill":src="collection.collectionCover"></u-image>
 										<view class="collection-name u-line-1">{{collection.collectionName}}</view>
-										<view class="collection-hold-date">收藏于 {{collection.holdDate}}</view>
+										<!-- <view class="collection-hold-date">收藏于 {{collection.holdDate}}</view> -->
 									</view>
 								</view>
 							</u-col>
@@ -95,13 +99,11 @@
 					<view v-show="currentTab == 1">
 						<u-row gutter="8">
 							<u-col span="6" v-for="collection in mysteryBoxs">
-								<view class="collection">
+								<view class="holdCollection">
 									<view class="collection-content" @click="holdCollectionDetailPage(collection.id)">
-										<image class="collection-cover" style="height: 280rpx; width: 100%;"
-											:src="collection.collectionCover">
-										</image>
+										<u-image width="322" height="322" mode="aspectFill":src="collection.collectionCover"></u-image>
 										<view class="collection-name u-line-1">{{collection.collectionName}}</view>
-										<view class="collection-hold-date">收藏于 {{collection.holdDate}}</view>
+										<!-- <view class="collection-hold-date">收藏于 {{collection.holdDate}}</view> -->
 									</view>
 								</view>
 							</u-col>
@@ -112,12 +114,12 @@
 							<u-col span="6" v-for="collection in soldCollections">
 								<view class="collection">
 									<view class="collection-content">
-										<image class="collection-cover" style="height: 280rpx; width: 100%;"
-											:src="collection.collectionCover">
-										</image>
-										<view class="collection-name u-line-1">{{collection.collectionName}}</view>
-										<view class="collection-hold-date">卖出于 {{collection.soldDate}}</view>
-										<view class="resale-price">￥{{collection.soldPrice}}</view>
+										<u-image width="322" height="322" mode="aspectFill":src="collection.collectionCover"></u-image>
+										<view class="collection-text">
+											<view class="collection-name u-line-1">{{collection.collectionName}}</view>
+											<view class="collection-hold-date">{{collection.soldDate}}</view>
+											<view class="resale-price">￥{{collection.soldPrice}}</view>
+										</view>
 									</view>
 								</view>
 							</u-col>
@@ -129,12 +131,12 @@
 								<view class="collection">
 									<view class="collection-content"
 										@click="myResaleCollectionDetailPage(collection.id)">
-										<image class="collection-cover" style="height: 280rpx; width: 100%;"
-											:src="collection.collectionCover">
-										</image>
-										<view class="collection-name u-line-1">{{collection.collectionName}}</view>
-										<view class="collection-hold-date">发布于 {{collection.resaleDate}}</view>
-										<view class="resale-price">￥{{collection.resalePrice}}</view>
+										<u-image width="322" height="322" mode="aspectFill":src="collection.collectionCover"></u-image>
+										<view class="collection-text">
+											<view class="collection-name u-line-1">{{collection.collectionName}}</view>
+											<view class="collection-hold-date">{{collection.resaleDate}}</view>
+											<view class="resale-price OPPOSans-M">￥{{collection.resalePrice}}</view>
+										</view>
 									</view>
 								</view>
 							</u-col>
@@ -155,7 +157,7 @@
 			return {
 				personalInfo: '',
 				tabs: [{
-					name: '藏品'
+					name: '数字藏品'
 				}, {
 					name: '盲盒'
 				}, {
@@ -174,6 +176,53 @@
 				noDataFlag: false,
 				unreadMsgIds: [],
 				customerServiceUrl: '',
+				chainMenuList:[
+					{
+						name:"我的订单",
+						icon:"/static/img/mine/order.png",
+						value:"/subPackages/mine/order/order"
+						// value:"/pages/payOrder/payOrder"
+					},
+					{
+						name:"转赠记录",
+						icon:"/static/img/mine/share.png",
+						// value:"/pages/myGiveRecord/myGiveRecord"
+						value:"/subPackages/mine/giveRecord/giveRecord"
+					},
+					{
+						name:"合成藏品",
+						icon:"/static/img/mine/box.png",
+						value:"/pages/composeActivity/composeActivity"
+					},
+					{
+						name:"空投兑换",
+						icon:"/static/img/mine/exchange.png",
+						value:"/pages/exchangeCode/exchangeCode"
+					},
+				],
+				serviceMenuList:[
+					{
+						name:"我的钱包",
+						icon:"/static/img/mine/wallet.png",
+						// value:"/pages/balanceChangeLog/balanceChangeLog"
+						value:"/subPackages/wallet/myWallet/myWallet"
+					},
+					{
+						name:"区块链查询",
+						icon:"/static/img/mine/chain.png",
+						value:"contactCustomerService"
+					},
+					{
+						name:"联系客服",
+						icon:"/static/img/mine/staff.png",
+						value:"contactCustomerService"
+					},
+					{
+						name:"邀请好友",
+						icon:"/static/img/mine/invite.png",
+						value:"/pages/invite/invite"
+					},
+				],
 			}
 		},
 		onLoad(option) {
@@ -199,10 +248,9 @@
 			this.refreshData();
 		},
 		methods: {
-
 			loginPage() {
-				uni.reLaunch({
-					url: "../login/login"
+				uni.navigateTo({
+					url: "/pages/login/login"
 				});
 			},
 
@@ -231,7 +279,7 @@
 			contactCustomerService() {
 				if (this.customerServiceUrl) {
 					uni.navigateTo({
-						url: '../customerService/customerService?customerServiceUrl=' + this.customerServiceUrl
+						url: '/pages/customerService/customerService?customerServiceUrl=' + this.customerServiceUrl
 					});
 				} else {
 					uni.showToast({
@@ -269,14 +317,20 @@
 			},
 
 			myResaleCollectionDetailPage(id) {
+				// uni.navigateTo({
+				// 	url: '../myResaleCollectionDetail/myResaleCollectionDetail?id=' + id
+				// });
 				uni.navigateTo({
-					url: '../myResaleCollectionDetail/myResaleCollectionDetail?id=' + id
+					url: `/subPackages/collection/collectionDetail/collectionDetail?id=${id}&type=resale`
 				});
 			},
 
 			holdCollectionDetailPage(id) {
+				// uni.navigateTo({
+				// 	url: '../holdCollectionDetail/holdCollectionDetail?id=' + id
+				// });
 				uni.navigateTo({
-					url: '../holdCollectionDetail/holdCollectionDetail?id=' + id
+					url: `/subPackages/collection/collectionDetail/collectionDetail?id=${id}&type=hold`
 				});
 			},
 
@@ -471,7 +525,10 @@
 			},
 
 			gotoPage(path) {
-				if (this.isLogin()) {
+				if(path==='contactCustomerService'){
+					this.contactCustomerService()
+				}
+				else if (this.isLogin()) {
 					uni.navigateTo({
 						url: path
 					});
@@ -499,187 +556,6 @@
 	}
 </script>
 
-<style>
-	page {
-		height: 100% !important;
-	}
-
-	.msg-unread-num {
-		background-color: #d10e0e;
-	}
-
-	.setting {
-		color: white;
-		padding-right: 32rpx;
-		position: relative;
-		top: -40rpx;
-	}
-
-	.msg-read {
-		height: 24rpx;
-		width: 24rpx;
-		border-radius: 24rpx;
-		line-height: 24rpx;
-		text-align: center;
-		font-size: 20rpx;
-		transform: scale(0.8);
-		position: absolute;
-		top: 0rpx;
-		left: 46rpx;
-	}
-
-	.div-line {
-		width: 100%;
-		height: 20rpx;
-		background: #f0f0f0;
-	}
-
-	.resale-price {
-		padding-left: 16rpx;
-	}
-
-	.custom-tabs {
-		padding-bottom: 32rpx;
-		display: flex;
-		align-items: center;
-	}
-
-	.custom-tabs-l {
-		flex: 1;
-	}
-
-	.compose-activity {
-		background: linear-gradient(to right, #2979ff, #909399);
-		height: 56rpx;
-		line-height: 56rpx;
-		border-radius: 44rpx 0rpx 0rpx 44rpx;
-		font-size: small;
-		color: white;
-		padding-left: 24rpx;
-		padding-right: 24rpx;
-		margin-left: 12rpx;
-	}
-
-
-	.custom-tab-content {
-		padding-left: 32rpx;
-		padding-right: 32rpx;
-	}
-
-	.collections {}
-
-	.collection {
-		padding-bottom: 10rpx;
-	}
-
-	.collection-content {
-		background: #e7e7e7;
-		border-radius: 20rpx;
-		padding-bottom: 20rpx;
-	}
-
-	.collection-cover {
-		border-radius: 20rpx 20rpx 0rpx 0rpx;
-	}
-
-	.collection-name {
-		font-size: 26rpx;
-		padding-left: 16rpx;
-		padding-top: 16rpx;
-		color: #000000;
-	}
-
-	.collection-hold-date {
-		font-size: 24rpx;
-		padding-left: 16rpx;
-	}
-
-	.no-data {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		height: 400rpx;
-	}
-
-	.grid-navs {
-		display: flex;
-		justify-content: space-around;
-		align-items: center;
-	}
-
-	.grid-nav {
-		color: white;
-		text-align: center;
-		padding-top: 20rpx;
-		padding-bottom: 20rpx;
-		position: relative;
-	}
-
-	.page-content {
-		padding-bottom: 140rpx;
-
-	}
-
-	.top-content {
-		padding-top: 64rpx;
-		background: linear-gradient(to right, #2f2f2f, #747171);
-	}
-
-	.avatar-nick-name {
-		display: flex;
-		align-items: center;
-		padding-bottom: 16rpx;
-		padding-left: 32rpx;
-	}
-
-	.nick-name-mobile {
-		flex: 1;
-	}
-
-	.login {}
-
-	.login-t {
-		padding-bottom: 12rpx;
-		color: white;
-	}
-
-	.login-b {
-		color: #888;
-		font-size: smaller;
-	}
-
-	.member-avatar {
-		padding-right: 20rpx;
-	}
-
-	.member-nick-name {
-		font-size: larger;
-		padding-bottom: 12rpx;
-		color: white;
-	}
-
-	.member-mobile {
-		font-size: small;
-		color: #888;
-	}
-
-	.block-chain-addr {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding-left: 32rpx;
-		padding-right: 32rpx;
-		padding-bottom: 16rpx;
-	}
-
-	.block-chain-addr-l {
-		color: white;
-		font-size: small;
-		overflow: hidden;
-		white-space: nowrap;
-		text-overflow: ellipsis;
-		padding-right: 60rpx;
-	}
-
-	.block-chain-addr-r {}
+<style lang="scss" scoped>
+@import "my.scss"
 </style>

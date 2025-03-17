@@ -1,0 +1,103 @@
+page {
+		height: 100% !important;
+	}
+
+	.setting{
+		padding: 32rpx;
+		.user{
+			padding: 0 32rpx;
+			background-color: #212121;
+			border-radius: 24rpx;
+			
+		}
+		.app{
+			padding: 0 32rpx;
+			background-color: #212121;
+			border-radius: 24rpx;
+			margin-top: 24rpx;
+		}
+		.item{
+			padding: 40rpx 0;
+			width: 100%;
+		}
+		.border{
+			border-bottom: 1rpx solid #FFFFFF14;
+		}
+		
+		.fixed-button-group {
+			margin-top: 80rpx;
+			width: 100%;
+			height: 96rpx;
+			line-height: 96rpx;
+			background-color: #212121;
+			color: rgba(255, 49, 64, 0.8);
+			text-align: center;
+			border-radius: 24rpx;
+		}
+	}
+	
+	
+
+	.real-name {
+	}
+
+	.unreal-name {
+		display: inline-block;
+		background: #f00;
+		border-radius: 10rpx;
+		width: 10rpx;
+		height: 10rpx;
+		margin-right: 16rpx;
+		position: relative;
+		top: -2rpx;
+	}
+
+	.setting-info .u-cell {}
+
+	.u-cell-title {}
+
+	.nick-name-input {
+		background: #ebebeb;
+		border-radius: 32rpx;
+		margin: 32rpx;
+		padding: 20rpx 32rpx;
+	}
+
+	.avatar {
+		padding-right: 16rpx;
+	}
+
+
+	.common-modal {
+		padding-left: 32rpx;
+		padding-right: 32rpx;
+		padding-top: 20rpx;
+		padding-bottom: 20rpx;
+	}
+
+	.modal-title {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.modal-title-txt {
+		font-weight: bold;
+	}
+
+	.modal-close-txt {}
+
+	.modal-content {
+		padding-top: 10rpx;
+		padding-bottom: 10rpx;
+	}
+
+	.login-duration-item {
+		padding-top: 30rpx;
+		padding-bottom: 30rpx;
+		display: flex;
+		align-items: center;
+	}
+
+	.login-duration-item-txt {
+		flex: 1;
+	}

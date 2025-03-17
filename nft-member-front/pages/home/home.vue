@@ -2,10 +2,13 @@
 	<view class="page-content">
 		<status-bar></status-bar>
 		<view class="home-title">
-			<u-image width="76rpx" height="64rpx" src="/static/img/home/logo.png"></u-image>
+			<!-- <u-image width="76rpx" height="64rpx" src="/static/img/home/logo.png"></u-image> -->
+			<u-image width="76rpx" height="64rpx" src="/static/img/home/colorfulText.png"></u-image>
 			<u-search placeholder="发现更多精彩" bgColor="#242425" :showAction="false" placeholderColor="#666666" color="#fff"
 			margin="0 32rpx" v-model="keyword" searchIcon="/static/img/common/search.png"></u-search>
-			<u-image width="40rpx" height="40rpx" src="/static/img/home/msg.png"></u-image>
+			<view class="msg" @click="common.toPage('/pages/msg/msg')">
+				<u-image width="40rpx" height="40rpx" src="/static/img/home/msg.png"></u-image>
+			</view>
 		</view>
 		<view class="titleSpace"></view>
 		<view class="main">
@@ -19,14 +22,14 @@
 					<u-image src="@/static/img/home/notice.png" width="42rpx" height="26rpx"></u-image>
 				</view>
 				<view class="notice">
-					<u-notice-bar mode="vertical" :list="noticeTitles" type="none" padding="16rpx 16rpx 16rpx 90rpx"
+					<u-notice-bar :list="noticeTitles" type="none" padding="16rpx 16rpx 16rpx 90rpx"
 						color="#fff" :font-size="24" :volume-icon="false" :more-icon="true" @click="noticeDetailPage"
 						@getMore="noticePage"></u-notice-bar>
 				</view>
 			</view>
 
 			<u-sticky :offset-top="statusbarHeight" :enable="enableStickyFlag" @fixed="stickyFixedFlag = true;"
-				@unfixed="stickyFixedFlag = false;">
+				bg-color="#0C0C0D" @unfixed="stickyFixedFlag = false;">
 				<view class="sticky" :class="{'sticky-fixed':stickyFixedFlag}">
 					<view class="top-nav">
 						<view v-for="tab in tabs" :class="{'top-nav-selected':currentTab == tab.value}"
@@ -35,15 +38,15 @@
 				</view>
 			</u-sticky>
 			<view class="sell-calendar-content" v-show="currentTab == '3'">
-				<calendar-list :list="forSaleCollections"></calendar-list>
+				<calendar-list :list="forSaleCollections" @itemClick="latestCollectionDetailPage"></calendar-list>
 				<view class="more-await">更多内容敬请期待</view>
 			</view>
 			<view class="collection-tab-content" v-show="currentTab == '1'">
-				<waterfall-list :list="latestCollections"></waterfall-list>
+				<waterfall-list :list="latestCollections" @itemClick="latestCollectionDetailPage"></waterfall-list>
 				<view class="more-await">更多内容敬请期待</view>
 			</view>
 			<view class="collection-tab-content" v-show="currentTab == '2'">
-				<waterfall-list :list="latestMysteryBoxs"></waterfall-list>
+				<waterfall-list @itemClick="latestCollectionDetailPage" :list="latestMysteryBoxs"></waterfall-list>
 			</view>
 		</view>
 	</view>
@@ -246,7 +249,7 @@
 
 			latestCollectionDetailPage(id) {
 				uni.navigateTo({
-					url: '../latestCollectionDetail/latestCollectionDetail?id=' + id
+					url: `/subPackages/collection/collectionDetail/collectionDetail?id=${id}`
 				});
 			},
 
@@ -375,12 +378,13 @@
 
 	.titleSpace {
 		height: 128rpx;
+		background-color: #0C0C0D;
 	}
 
 	.home-title-r {
 		font-size: 52rpx;
 		padding-left: 40rpx;
-		color: rgb(53, 53, 53 / 60%);
+		color: rgba(53, 53, 53 , 60%);
 	}
 
 	.more-await {

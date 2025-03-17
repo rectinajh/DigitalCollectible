@@ -136,6 +136,7 @@
 				style.transform = `translateY(${this.active ? 0 : '-100%'})`
 				style['transition-duration'] = this.duration / 1000 + 's';
 				style.borderRadius = `0 0 ${this.$u.addUnit(this.borderRadius)} ${this.$u.addUnit(this.borderRadius)}`;
+				style.backgroundColor="#212121"
 				return style;
 			}
 		},

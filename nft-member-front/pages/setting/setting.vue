@@ -1,12 +1,40 @@
 <template>
 	<view>
-		<u-modal v-model="updateNickNameFlag" title="修改昵称" :show-cancel-button="true" @confirm="updateNickName">
-			<view class="slot-content">
-				<input class="nick-name-input" focus v-model="nickName" />
+		<view class="setting">
+			<view class="user">
+				<view class="item border" @click="gotoPage('/subPackages/setting/userinfo/userinfo')">
+					<lj-cell title="账户信息" icon="/static/img/common/cell/account.png"></lj-cell>
+				</view>
+				<view class="item border" @click="bindRealName">
+					<lj-cell title="实名认证" icon="/static/img/common/cell/safe.png" 
+					:isClick="personalInfo.bindRealNameTime ? false : true"
+					:description="personalInfo.bindRealNameTime ? '已认证' : '未认证'"></lj-cell>
+				</view>
+				<view class="item border" @click="settingPwd">
+					<lj-cell title="修改密码" icon="/static/img/common/cell/password.png"></lj-cell>
+				</view>
+				<view class="item" @click="gotoPage('/pages/loginRecord/loginRecord')">
+					<lj-cell title="登录记录" icon="/static/img/common/cell/lock.png" 
+					:description="personalInfo.latelyLoginTime"></lj-cell>
+				</view>
 			</view>
-		</u-modal>
-		<view class="setting-info">
-			<u-cell-group title="个人信息" :border="false" :title-style="titleStyle">
+			<view class="app">
+				<!-- <view class="item">
+					<lj-cell title="关于我们" icon="/static/img/common/cell/about.png"></lj-cell>
+				</view> -->
+				<!-- <view class="item">
+					<lj-cell title="分享灵境" icon="/static/img/common/cell/safe.png" 
+					:description="personalInfo.bindRealNameTime ? '已认证' : '未认证'"></lj-cell>
+				</view> -->
+			</view>
+			
+			<view class="fixed-button-group" @click="logout">
+				退出登录
+			</view>
+		</view>
+		
+		<!-- <view class="setting-info">
+			<u-cell-group :border="false" :title-style="titleStyle">
 				<u-cell-item title="头像" :arrow="false" :border-bottom="false" :title-style="titleStyle"
 					@click="chooseAvatar">
 					<view slot="right-icon">
@@ -25,7 +53,7 @@
 					<view slot="label">{{getBlockChainAddr()}}</view>
 				</u-cell-item>
 			</u-cell-group>
-			<u-cell-group title="账号安全" :border="false" :title-style="titleStyle">
+			<u-cell-group :border="false" :title-style="titleStyle">
 				<u-cell-item title="密码设置" :arrow="true" :border-bottom="false" :title-style="titleStyle"
 					@click="settingPwd">
 				</u-cell-item>
@@ -42,15 +70,12 @@
 					<view slot="label">最近登录时间： {{personalInfo.latelyLoginTime}}</view>
 				</u-cell-item>
 			</u-cell-group>
-		</view>
-		<view class="fixed-button-group">
-			<u-button type="primary" @click="logout">退出登录</u-button>
-			</u-row>
-		</view>
+		</view> -->
 	</view>
 </template>
 
 <script>
+	import ljCell from './components/lj-cell/lj-cell.vue';
 	export default {
 		data() {
 			return {
@@ -59,6 +84,9 @@
 				personalInfo: '',
 				titleStyle: {}
 			}
+		},
+		components:{
+			ljCell
 		},
 		onLoad() {
 
@@ -141,7 +169,7 @@
 				if (this.personalInfo.bindRealNameTime) {
 					return;
 				}
-				this.gotoPage('../bindRealName/bindRealName');
+				this.gotoPage('/pages/bindRealName/bindRealName');
 			},
 
 			logout() {
@@ -183,81 +211,6 @@
 	}
 </script>
 
-<style>
-	page {
-		height: 100% !important;
-	}
-
-
-	.real-name {
-	}
-
-	.unreal-name {
-		display: inline-block;
-		background: #f00;
-		border-radius: 10rpx;
-		width: 10rpx;
-		height: 10rpx;
-		margin-right: 16rpx;
-		position: relative;
-		top: -2rpx;
-	}
-
-	.setting-info .u-cell {}
-
-	.u-cell-title {}
-
-	.nick-name-input {
-		background: #ebebeb;
-		border-radius: 32rpx;
-		margin: 32rpx;
-		padding: 20rpx 32rpx;
-	}
-
-	.avatar {
-		padding-right: 16rpx;
-	}
-
-	.fixed-button-group {
-		position: fixed;
-		bottom: 60rpx;
-		left: 0rpx;
-		width: 100%;
-		padding-left: 32rpx;
-		padding-right: 32rpx;
-	}
-
-	.common-modal {
-		padding-left: 32rpx;
-		padding-right: 32rpx;
-		padding-top: 20rpx;
-		padding-bottom: 20rpx;
-	}
-
-	.modal-title {
-		display: flex;
-		justify-content: space-between;
-	}
-
-	.modal-title-txt {
-		font-weight: bold;
-	}
-
-	.modal-close-txt {}
-
-	.modal-content {
-		padding-top: 10rpx;
-		padding-bottom: 10rpx;
-	}
-
-	.login-duration-item {
-		padding-top: 30rpx;
-		padding-bottom: 30rpx;
-		display: flex;
-		align-items: center;
-	}
-
-	.login-duration-item-txt {
-		flex: 1;
-	}
+<style lang="scss" scoped>
+@import 'setting.scss'
 </style>

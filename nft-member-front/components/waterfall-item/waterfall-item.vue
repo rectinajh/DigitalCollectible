@@ -39,6 +39,14 @@
 						即将售罄
 					</view>
 				</view>
+				<view class="status" v-show="item.stock == 0">
+					<view class="img">
+						<u-image src="@/static/img/common/shortMask.png" width="106" height="40"></u-image>
+					</view>
+					<view class="text shortage">
+						库存售罄
+					</view>
+				</view>
 			</view>
 			<view class="img">
 				<u-image mode="aspectFill" width="332rpx" height="332rpx" :src="item.cover"></u-image>
@@ -102,9 +110,7 @@
 		},
 		methods:{
 			latestCollectionDetailPage(id) {
-				uni.navigateTo({
-					url: '/subPackages/collection/collectionDetail/collectionDetail?id=' + id
-				});
+				this.$emit('itemClick',id)
 			},
 		}
 	}

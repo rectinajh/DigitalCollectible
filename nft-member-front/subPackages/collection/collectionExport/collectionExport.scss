@@ -1,0 +1,156 @@
+.page-content {
+		padding: 28rpx 32rpx 32rpx 32rpx;
+
+		.info {
+
+			.tips {
+				font-size: 28rpx;
+				color: #ccc;
+			}
+
+			.collection {
+				margin-top: 24rpx;
+				width: 100%;
+				background-color: #212121;
+				display: flex;
+				align-items: center;
+				border-radius: 24rpx;
+				padding: 24rpx;
+
+				.img {}
+
+				.text {
+					padding-left: 24rpx;
+
+					.name {
+						font-size: 30rpx;
+					}
+
+					.code {
+						font-size: 26rpx;
+						padding-top: 8rpx;
+						padding-bottom: 16rpx;
+					}
+
+					.creatorName {
+						font-size: 24rpx;
+						color: #999;
+					}
+				}
+			}
+		}
+
+		.form {
+			margin-top: 80rpx;
+
+			.title {
+				font-size: 28rpx;
+				color: #ccc;
+				padding-bottom: 24rpx;
+			}
+
+			.input {
+
+				.textarea {
+					padding: 32rpx;
+					background-color: #212121;
+					border-radius: 24rpx;
+					margin-top: 24rpx;
+					// text-align: center;
+					min-height: 280rpx;
+
+					textarea {
+						font-size: 28rpx;
+					}
+				}
+
+				.resaleInput {
+					background-color: #212121;
+					width: 100%;
+					height: 112rpx;
+					border-radius: 24rpx;
+					padding: 36rpx;
+					display: flex;
+					align-items: center;
+					.sign{
+						padding-right: 6rpx;
+					}
+				}
+			}
+		}
+
+		.btn {
+			margin-top: 48rpx;
+			width: 100%;
+			height: 88rpx;
+			border-radius: 60rpx;
+			background-color: #FCE6B7;
+			color: #644205;
+			font-size: 32rpx;
+			text-align: center;
+			line-height: 88rpx;
+		}
+		.mask {
+			opacity: 20%;
+		}
+		
+		.bottom{
+			margin-top: 48rpx;
+			.title{
+				font-size: 26rpx;
+			}
+			.content{
+				font-size: 24rpx;
+				color:#666;
+				margin-top: 8rpx;
+				.explain-item{
+					margin-top: 8rpx;
+					line-height: 36rpx;
+				}
+			}
+		}
+		
+		.confirmPopup{
+			background: #181819;
+			background-blend-mode: color-dodge;
+			background: #181819;
+			padding: 32rpx;
+			.title{
+				font-size: 34rpx;
+				text-align: center;
+				padding-bottom: 40rpx;
+			}
+			.receiver-info{
+				font-size: 28rpx;
+				color: #fff;
+				.receiver-info-title{
+					text-align: center;
+					padding-bottom: 32rpx;
+				}
+				.receiver-info-item{
+					color: #999;
+					padding-bottom: 32rpx;
+					.receiver-info-item-t{
+						padding-bottom: 12rpx;
+					}
+				}
+			}
+			.checked-flag{
+				display: flex;
+				align-items: center;
+				.checkBox {
+					margin-right: 16rpx;
+					position: relative;
+				
+					.uncheck {
+						width: 32rpx;
+						height: 32rpx;
+						border: 2rpx solid #999999;
+						border-radius: 100%;
+					}
+				
+					.checked {}
+				}
+			}
+		}
+	}

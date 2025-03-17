@@ -30,6 +30,8 @@
 				<u-empty text="暂无数据" mode="favor"></u-empty>
 			</view>
 			<view>
+				<order-List :list="orderRecords"></order-List>
+				
 				<view class="order-record" v-for="orderRecord in orderRecords"
 					@click="payOrderDetailPage(orderRecord.id)">
 					<view class="order-record-content">
@@ -94,6 +96,7 @@
 </template>
 
 <script>
+	import orderList from '@/subPackages/mine/components/order-list/order-list.vue'
 	export default {
 		data() {
 			return {
@@ -120,6 +123,9 @@
 				showCancelModalFlag: false,
 				selectedOrder: '',
 			}
+		},
+		components:{
+			orderList
 		},
 		onLoad() {
 			

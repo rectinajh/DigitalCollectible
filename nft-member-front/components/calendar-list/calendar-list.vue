@@ -40,9 +40,7 @@
 		},
 		methods:{
 			latestCollectionDetailPage(id) {
-				uni.navigateTo({
-					url: '../latestCollectionDetail/latestCollectionDetail?id=' + id
-				});
+				this.$emit('itemClick',id)
 			},
 		}
 	}
