@@ -4,13 +4,26 @@
 This project is licensed under the **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License** (CC BY-NC-SA 4.0).  
 - You may **use, modify, and share** this code for **non-commercial purposes only**.  
 - You **must give appropriate credit** to the original author.  
-- If you remix or transform the code, you must distribute your contributions under the **same license**.  
+- If you remix or transform the code, you must distribute your contributions under the **same license**.
+
+  # 项目名称
+
+> ⚠️ **注意**：此代码**禁止商业用途**，仅限学习交流。修改或分发需遵守许可证条款。
+
+## 协议（License）
+[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC_BY--NC--SA_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+
+本项目采用 **CC BY-NC-SA 4.0** 协议：
+- ✅ 允许：查看、学习、修改、分享代码。
+- ❌ 禁止：将代码或衍生作品用于商业目的。
+- 📜 要求：保留原作者署名，修改后需使用相同协议。
+
+**商业用途需单独授权**，请联系：[rectinajh@163.com]。
+
+完整协议内容详见 [LICENSE](LICENSE) 文件。
 
 **商业用途需获得书面授权**。  
 For full license details, see [LICENSE](LICENSE).
-
-[![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC_BY--NC--SA_4.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-
 
 # DigitalCollectible
 
@@ -26,9 +39,6 @@ http://35.88.64.138/#/
 http://35.88.64.138:8080/page/login
 
 后台的账号密码是admin,123
-
-![b5b1e43e0ff19f57baa0aabe41b21757](https://github.com/user-attachments/assets/67d656fb-766e-434b-83c2-e4fafa02113e)
-
 
 ```
 环境要求：jdk1.8或以上，mysql5.7，redis随便一个版本
