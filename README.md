@@ -6,8 +6,6 @@ This project is licensed under the **Creative Commons Attribution-NonCommercial-
 - You **must give appropriate credit** to the original author.  
 - If you remix or transform the code, you must distribute your contributions under the **same license**.
 
-  # 项目名称
-
 > ⚠️ **注意**：此代码**禁止商业用途**，仅限学习交流。修改或分发需遵守许可证条款。
 
 ## 协议（License）
@@ -25,7 +23,10 @@ This project is licensed under the **Creative Commons Attribution-NonCommercial-
 **商业用途需获得书面授权**。  
 For full license details, see [LICENSE](LICENSE).
 
-# DigitalCollectible
+
+# 项目名称：DigitalCollectible
+# 数字藏品交易平台
+
 
 测试环境：
 前端
